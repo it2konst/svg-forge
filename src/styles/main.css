@@ -7,6 +7,10 @@
   --v-font-body: 'Onest Variable', system-ui, sans-serif;
   --v-font-heading: 'Onest Variable', system-ui, sans-serif;
   --app-font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  /* Fixed preview backgrounds: deliberately the same in both app themes. */
+  --app-preview-light: #fafaf8;
+  --app-preview-dark: #202227;
 }
 
 html {

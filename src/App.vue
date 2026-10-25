@@ -1,22 +1,48 @@
 <script setup lang="ts">
-import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
-import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
+import { computed } from 'vue'
+import { useDisplay } from 'vuetify'
+import AppHeader from '@/components/AppHeader.vue'
+import PreviewStage from '@/components/PreviewStage.vue'
+import SettingsPanel from '@/components/SettingsPanel.vue'
 import { useLocaleSync } from '@/composables/useLocaleSync'
 import { useThemeSync } from '@/composables/useThemeSync'
+import { useUiStore } from '@/stores/ui'
 
 useThemeSync()
 useLocaleSync()
+
+const ui = useUiStore()
+const { lgAndUp } = useDisplay()
+
+// Wide screens: settings sit beside the preview. Narrow screens: they slide over it.
+const settingsOpen = computed({
+  get: () => ui.settingsOpen ?? lgAndUp.value,
+  set: (value: boolean) => (ui.settingsOpen = value),
+})
 </script>
 
 <template>
   <v-app>
-    <v-app-bar flat border="b" density="comfortable">
-      <v-app-bar-title>{{ $t('app.name') }}</v-app-bar-title>
-      <template #append>
-        <LanguageSwitcher />
-        <ThemeSwitcher />
-      </template>
-    </v-app-bar>
-    <v-main />
+    <AppHeader @toggle-settings="settingsOpen = !settingsOpen" />
+
+    <v-navigation-drawer
+      v-model="settingsOpen"
+      location="end"
+      width="320"
+      :temporary="!lgAndUp"
+      color="surface"
+    >
+      <SettingsPanel />
+    </v-navigation-drawer>
+
+    <v-main class="app-main">
+      <PreviewStage />
+    </v-main>
   </v-app>
 </template>
+
+<style scoped>
+.app-main {
+  height: 100dvh;
+}
+</style>
