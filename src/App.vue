@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { iconOpen } from '@/icons'
+import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
+import { useThemeSync } from '@/composables/useThemeSync'
+
+useThemeSync()
 </script>
 
 <template>
   <v-app>
-    <v-main class="d-flex align-center justify-center">
-      <v-btn :prepend-icon="iconOpen" variant="flat" color="primary">svg-forge</v-btn>
-    </v-main>
+    <v-app-bar flat border="b" density="comfortable">
+      <v-app-bar-title>svg-forge</v-app-bar-title>
+      <template #append>
+        <ThemeSwitcher />
+      </template>
+    </v-app-bar>
+    <v-main />
   </v-app>
 </template>
