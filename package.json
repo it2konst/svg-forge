@@ -1,7 +1,7 @@
 {
   "name": "svg-forge",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -41,5 +41,6 @@
   },
   "engines": {
     "node": ">=20.19"
-  }
+  },
+  "description": "SVG optimizer in the browser, built with Vue 3, Vuetify and SVGO"
 }
