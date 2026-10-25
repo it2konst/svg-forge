@@ -1,0 +1,18 @@
+/* Self-hosted variable fonts: both cover Latin and Cyrillic, nothing loads from third-party CDNs. */
+@import '@fontsource-variable/onest';
+@import '@fontsource-variable/jetbrains-mono';
+
+:root {
+  /* Vuetify 4 reads its fonts from these custom properties. */
+  --v-font-body: 'Onest Variable', system-ui, sans-serif;
+  --v-font-heading: 'Onest Variable', system-ui, sans-serif;
+  --app-font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+html {
+  overflow-y: auto;
+}
+
+body {
+  font-feature-settings: 'tnum' 1; /* tabular numbers keep byte counts aligned */
+}
