@@ -81,9 +81,9 @@ const showImage = computed(() => !doc.value || ui.view === 'image')
 
     <footer class="stage__status">
       <span>
-        {{ $t('stats.original') }}: <strong>{{ doc ? formatBytes(doc.bytes) : '—' }}</strong>
+        {{ $t('stats.original') }}: <strong>{{ doc ? formatBytes(doc.bytes) : '-' }}</strong>
       </span>
-      <span>{{ $t('stats.optimized') }}: —</span>
+      <span>{{ $t('stats.optimized') }}: -</span>
       <v-spacer />
       <span v-if="!doc && !xs" class="stage__status-note">{{ $t('stats.noFile') }}</span>
     </footer>

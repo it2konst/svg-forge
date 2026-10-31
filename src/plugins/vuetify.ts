@@ -8,7 +8,7 @@ import type { ThemeMode } from '@/stores/settings'
 
 /**
  * Icons are imported as SVG paths from @mdi/js (see src/icons.ts),
- * so only the icons we use end up in the bundle — no icon font.
+ * so only the icons we use end up in the bundle - no icon font.
  *
  * The initial theme is passed in from the settings store so the page
  * renders in the saved theme right away, without a light-to-dark flash.
