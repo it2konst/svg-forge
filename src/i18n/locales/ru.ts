@@ -42,6 +42,11 @@ const ru: MessageSchema = {
     optimizations: 'Оптимизации',
     pending: 'Параметры оптимизации появятся здесь, когда подключим SVGO.',
   },
+  units: {
+    b: 'Б',
+    kb: 'КБ',
+    mb: 'МБ',
+  },
   stats: {
     original: 'Исходный',
     optimized: 'Оптимизированный',

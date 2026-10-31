@@ -42,6 +42,11 @@ const en = {
     optimizations: 'Optimizations',
     pending: 'Optimization options will appear here once SVGO is connected.',
   },
+  units: {
+    b: 'B',
+    kb: 'KB',
+    mb: 'MB',
+  },
   stats: {
     original: 'Original',
     optimized: 'Optimized',
