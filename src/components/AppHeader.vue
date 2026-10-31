@@ -3,18 +3,15 @@ import { useDisplay } from 'vuetify'
 import AppLogo from '@/components/AppLogo.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
-import { iconDemo, iconOpen, iconPaste, iconSettings } from '@/icons'
+import { useInputActions } from '@/composables/useInputActions'
+import { iconSettings } from '@/icons'
 
 defineEmits<{ toggleSettings: [] }>()
 
 // On narrow screens the actions collapse to icon buttons.
 const { smAndDown, xs } = useDisplay()
 
-const actions = [
-  { key: 'open', icon: iconOpen },
-  { key: 'paste', icon: iconPaste },
-  { key: 'demo', icon: iconDemo },
-] as const
+const actions = useInputActions()
 </script>
 
 <template>
@@ -32,9 +29,13 @@ const actions = [
           v-if="smAndDown"
           :icon="action.icon"
           :aria-label="$t(`actions.${action.key}`)"
-          disabled
-        />
-        <v-btn v-else :prepend-icon="action.icon" disabled>
+          :disabled="!action.run"
+          @click="action.run?.()"
+        >
+          <v-icon :icon="action.icon" />
+          <v-tooltip activator="parent">{{ $t(`actions.${action.key}`) }}</v-tooltip>
+        </v-btn>
+        <v-btn v-else :prepend-icon="action.icon" :disabled="!action.run" @click="action.run?.()">
           {{ $t(`actions.${action.key}`) }}
         </v-btn>
       </template>

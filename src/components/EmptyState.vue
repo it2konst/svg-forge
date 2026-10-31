@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { iconDemo, iconOpen, iconPaste } from '@/icons'
+import { useInputActions } from '@/composables/useInputActions'
+
+const [open, paste, demo] = useInputActions()
 </script>
 
 <template>
@@ -25,13 +27,24 @@ import { iconDemo, iconOpen, iconPaste } from '@/icons'
     <p class="empty-state__hint">{{ $t('empty.hint') }}</p>
 
     <div class="empty-state__actions">
-      <v-btn :prepend-icon="iconOpen" variant="flat" color="primary" disabled>
+      <v-btn
+        :prepend-icon="open.icon"
+        variant="flat"
+        color="primary"
+        :disabled="!open.run"
+        @click="open.run?.()"
+      >
         {{ $t('actions.open') }}
       </v-btn>
-      <v-btn :prepend-icon="iconPaste" variant="tonal" disabled>
+      <v-btn
+        :prepend-icon="paste.icon"
+        variant="tonal"
+        :disabled="!paste.run"
+        @click="paste.run?.()"
+      >
         {{ $t('actions.paste') }}
       </v-btn>
-      <v-btn :prepend-icon="iconDemo" variant="text" disabled>
+      <v-btn :prepend-icon="demo.icon" variant="text" :disabled="!demo.run" @click="demo.run?.()">
         {{ $t('actions.demo') }}
       </v-btn>
     </div>
