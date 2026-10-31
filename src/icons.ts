@@ -18,4 +18,6 @@ export {
   mdiContentCopy as iconCopy,
   mdiCheckerboard as iconCheckerboard,
   mdiCheck as iconCheck,
+  mdiClose as iconClose,
+  mdiFileOutline as iconFile,
 } from '@mdi/js'

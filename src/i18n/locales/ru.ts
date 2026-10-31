@@ -42,6 +42,9 @@ const ru: MessageSchema = {
     optimizations: 'Оптимизации',
     pending: 'Параметры оптимизации появятся здесь, когда подключим SVGO.',
   },
+  document: {
+    close: 'Закрыть файл',
+  },
   notifications: {
     close: 'Закрыть',
   },

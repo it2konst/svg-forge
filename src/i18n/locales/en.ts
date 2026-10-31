@@ -42,6 +42,9 @@ const en = {
     optimizations: 'Optimizations',
     pending: 'Optimization options will appear here once SVGO is connected.',
   },
+  document: {
+    close: 'Close file',
+  },
   notifications: {
     close: 'Close',
   },
