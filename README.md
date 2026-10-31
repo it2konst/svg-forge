@@ -8,12 +8,17 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. The layout, themes and localization are in place; the optimizer is being wired up next. See the [roadmap](#roadmap).
+> Work in progress. SVG files can already be opened, pasted or dropped and previewed; the optimizer is being wired up next. See the [roadmap](#roadmap).
 
 ## Features
 
 **Ready**
 
+- Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
+- Demo file to try the app without your own SVG
+- Inline SVG copied from HTML works: missing `xmlns` and `xmlns:xlink` are added automatically
+- Clear, translated errors for empty input, non-SVG files, broken markup and files over 10 MB
+- Safe image preview and a read-only markup view
 - Light, dark and system themes, tuned for long sessions: no pure white or black, softened text contrast
 - English and Russian interface; the browser language is picked on first visit
 - Preview background independent of the theme: checkerboard, light or dark
@@ -37,6 +42,7 @@ SVG files can contain scripts and event handlers. svg-forge never injects user S
 
 - previews are rendered through `<img src="blob:…">`, where scripts never run and external resources never load;
 - `v-html` is forbidden by the lint config;
+- incoming markup is parsed with `DOMParser` in XML mode, which never runs scripts, before anything else happens;
 - the deployed site sends a strict CSP that only allows scripts from its own origin.
 
 ## Tech stack
@@ -75,17 +81,18 @@ npm run dev
 ```text
 src/
   components/    UI components (header, preview stage, settings panel…)
-  composables/   theme and language sync
+  composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
   plugins/       Vuetify setup
-  stores/        Pinia stores: persisted settings, transient UI state
+  stores/        Pinia: current document, notifications, persisted settings, UI state
+  utils/         SVG validation and normalization, byte formatting
   theme/         light and dark palettes
   icons.ts       every icon the app uses, in one place
 ```
 
 ## Roadmap
 
-1. Load SVG: open file, paste markup, drag and drop, demo file
+1. ~~Load SVG: open file, paste markup, drag and drop, demo file~~ ✓
 2. SVGO in a Web Worker, global options and plugin toggles
 3. Markup view (CodeMirror), size statistics, download and copy
 4. Comparison slider, presets
