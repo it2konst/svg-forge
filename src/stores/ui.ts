@@ -8,6 +8,7 @@ export const useUiStore = defineStore('ui', () => {
   const view = ref<StageView>('image')
   /** null = let the layout decide (open on wide screens, closed on narrow ones). */
   const settingsOpen = ref<boolean | null>(null)
+  const pasteDialogOpen = ref(false)
 
-  return { view, settingsOpen }
+  return { view, settingsOpen, pasteDialogOpen }
 })

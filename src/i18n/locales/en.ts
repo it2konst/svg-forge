@@ -42,6 +42,13 @@ const en = {
     optimizations: 'Optimizations',
     pending: 'Optimization options will appear here once SVGO is connected.',
   },
+  paste: {
+    title: 'Paste SVG markup',
+    placeholder: '<svg xmlns="http://www.w3.org/2000/svg" …',
+    hint: 'Tip: you can also press Ctrl+V anywhere on the page to paste an SVG.',
+    cancel: 'Cancel',
+    submit: 'Open',
+  },
   document: {
     close: 'Close file',
   },

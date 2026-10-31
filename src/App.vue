@@ -3,14 +3,17 @@ import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 import AppHeader from '@/components/AppHeader.vue'
 import AppNotifications from '@/components/AppNotifications.vue'
+import PasteDialog from '@/components/PasteDialog.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
 import { useLocaleSync } from '@/composables/useLocaleSync'
+import { usePasteListener } from '@/composables/usePasteListener'
 import { useThemeSync } from '@/composables/useThemeSync'
 import { useUiStore } from '@/stores/ui'
 
 useThemeSync()
 useLocaleSync()
+usePasteListener()
 
 const ui = useUiStore()
 const { lgAndUp } = useDisplay()
@@ -40,6 +43,7 @@ const settingsOpen = computed({
       <PreviewStage />
     </v-main>
 
+    <PasteDialog />
     <AppNotifications />
   </v-app>
 </template>

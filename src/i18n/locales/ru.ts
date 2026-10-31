@@ -42,6 +42,13 @@ const ru: MessageSchema = {
     optimizations: 'Оптимизации',
     pending: 'Параметры оптимизации появятся здесь, когда подключим SVGO.',
   },
+  paste: {
+    title: 'Вставить код SVG',
+    placeholder: '<svg xmlns="http://www.w3.org/2000/svg" …',
+    hint: 'Совет: можно просто нажать Ctrl+V в любом месте страницы, чтобы вставить SVG.',
+    cancel: 'Отмена',
+    submit: 'Открыть',
+  },
   document: {
     close: 'Закрыть файл',
   },
