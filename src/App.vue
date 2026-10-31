@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 import AppHeader from '@/components/AppHeader.vue'
 import AppNotifications from '@/components/AppNotifications.vue'
+import DropOverlay from '@/components/DropOverlay.vue'
 import PasteDialog from '@/components/PasteDialog.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
@@ -44,6 +45,7 @@ const settingsOpen = computed({
     </v-main>
 
     <PasteDialog />
+    <DropOverlay />
     <AppNotifications />
   </v-app>
 </template>

@@ -49,6 +49,10 @@ const ru: MessageSchema = {
     cancel: 'Отмена',
     submit: 'Открыть',
   },
+  drop: {
+    release: 'Отпустите, чтобы открыть',
+    onlyFirst: 'Открыт первый SVG. Обработка нескольких файлов сразу появится позже.',
+  },
   document: {
     close: 'Закрыть файл',
   },

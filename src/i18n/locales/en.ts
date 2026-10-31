@@ -49,6 +49,10 @@ const en = {
     cancel: 'Cancel',
     submit: 'Open',
   },
+  drop: {
+    release: 'Drop to open',
+    onlyFirst: 'Opened the first SVG. Processing several files at once is coming later.',
+  },
   document: {
     close: 'Close file',
   },
