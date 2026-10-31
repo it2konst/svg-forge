@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 import AppHeader from '@/components/AppHeader.vue'
+import AppNotifications from '@/components/AppNotifications.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
 import { useLocaleSync } from '@/composables/useLocaleSync'
@@ -38,6 +39,8 @@ const settingsOpen = computed({
     <v-main class="app-main">
       <PreviewStage />
     </v-main>
+
+    <AppNotifications />
   </v-app>
 </template>
 

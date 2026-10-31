@@ -42,6 +42,16 @@ const en = {
     optimizations: 'Optimizations',
     pending: 'Optimization options will appear here once SVGO is connected.',
   },
+  notifications: {
+    close: 'Close',
+  },
+  errors: {
+    empty: 'The input is empty. Paste SVG markup or choose a file.',
+    tooLarge: 'This file is over 10 MB, which is too large to optimize in the browser.',
+    notSvg: 'This is not an SVG. Choose a file with the .svg extension or paste <svg> markup.',
+    invalidXml: 'This SVG has broken markup and cannot be read. Check that every tag is closed.',
+    readFailed: 'The file could not be read. Try opening it again.',
+  },
   units: {
     b: 'B',
     kb: 'KB',
