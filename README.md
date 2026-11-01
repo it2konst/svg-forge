@@ -8,12 +8,17 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. SVG files can already be opened, pasted or dropped and previewed; the optimizer is being wired up next. See the [roadmap](#roadmap).
+> Work in progress. Opening and optimizing SVG works; download, copy and syntax highlighting come next. See the [roadmap](#roadmap).
 
 ## Features
 
 **Ready**
 
+- SVGO 4 runs in a Web Worker, so the interface never freezes; the result updates live as options change
+- Global options (multipass, number and transform precision, prettify) and switches for 47 SVGO plugins in five groups, saved between visits
+- Optimized size and the size change right in the status bar
+- "Show original" to compare with the source
+- Scripts and event handlers are removed from the output by default
 - Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
 - Demo file to try the app without your own SVG
 - Inline SVG copied from HTML works: missing `xmlns` and `xmlns:xlink` are added automatically
@@ -27,7 +32,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- All SVGO options with live preview and size statistics (raw and gzip)
+- Gzip size statistics, download and copy
 - Markup view with syntax highlighting
 - Before / after comparison slider
 - Export as a Vue component, data URI or CSS background
@@ -56,6 +61,7 @@ SVG files can contain scripts and event handlers. svg-forge never injects user S
 | i18n      | vue-i18n, connected to Vuetify through its adapter    |
 | Fonts     | Onest and JetBrains Mono, self-hosted via Fontsource  |
 | Quality   | ESLint (flat config), Prettier, vue-tsc               |
+| Optimizer | SVGO 4 in a Web Worker, Comlink                       |
 | Hosting   | Vercel                                                |
 
 ## Getting started
@@ -83,8 +89,9 @@ src/
   components/    UI components (header, preview stage, settings panel…)
   composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
+  optimizer/     SVGO worker, worker client, plugin catalog, settings to SVGO config
   plugins/       Vuetify setup
-  stores/        Pinia: current document, notifications, persisted settings, UI state
+  stores/        Pinia: current document, optimizer, notifications, settings, UI state
   utils/         SVG validation and normalization, byte formatting
   theme/         light and dark palettes
   icons.ts       every icon the app uses, in one place
@@ -93,7 +100,7 @@ src/
 ## Roadmap
 
 1. ~~Load SVG: open file, paste markup, drag and drop, demo file~~ ✓
-2. SVGO in a Web Worker, global options and plugin toggles
+2. ~~SVGO in a Web Worker, global options and plugin toggles~~ ✓
 3. Markup view (CodeMirror), size statistics, download and copy
 4. Comparison slider, presets
 5. Export to Vue component, data URI, CSS
