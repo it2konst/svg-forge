@@ -102,4 +102,4 @@ src/
 
 ## License
 
-Not chosen yet.
+[MIT](LICENSE)
