@@ -19,5 +19,6 @@ export {
   mdiCheckerboard as iconCheckerboard,
   mdiCheck as iconCheck,
   mdiClose as iconClose,
+  mdiRestore as iconReset,
   mdiFileOutline as iconFile,
 } from '@mdi/js'
