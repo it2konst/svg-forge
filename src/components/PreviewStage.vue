@@ -4,17 +4,18 @@ import { useDisplay } from 'vuetify'
 import EmptyState from '@/components/EmptyState.vue'
 import MarkupView from '@/components/MarkupView.vue'
 import PreviewBackgroundToggle from '@/components/PreviewBackgroundToggle.vue'
+import StageStatus from '@/components/StageStatus.vue'
 import SvgPreview from '@/components/SvgPreview.vue'
-import { useFormatBytes } from '@/composables/useFormatBytes'
 import { iconClose, iconCode, iconFile, iconPreview } from '@/icons'
 import { useDocumentStore } from '@/stores/document'
+import { useOptimizerStore } from '@/stores/optimizer'
 import { useSettingsStore } from '@/stores/settings'
 import { useUiStore } from '@/stores/ui'
 
 const settings = useSettingsStore()
 const ui = useUiStore()
 const documentStore = useDocumentStore()
-const { formatBytes } = useFormatBytes()
+const optimizer = useOptimizerStore()
 const { xs } = useDisplay()
 
 const viewOptions = [
@@ -24,6 +25,15 @@ const viewOptions = [
 
 const doc = computed(() => documentStore.current)
 const showImage = computed(() => !doc.value || ui.view === 'image')
+
+/** What the stage shows: the optimized result, unless the user asked for the original. */
+const displayed = computed(() => {
+  if (!doc.value) return null
+  const optimized = !ui.showOriginal ? optimizer.result : null
+  return optimized
+    ? { markup: optimized.markup, isOriginal: false }
+    : { markup: doc.value.markup, isOriginal: true }
+})
 </script>
 
 <template>
@@ -74,19 +84,13 @@ const showImage = computed(() => !doc.value || ui.view === 'image')
       class="stage__canvas"
       :class="showImage ? `stage__canvas--${settings.previewBackground}` : 'stage__canvas--markup'"
     >
-      <EmptyState v-if="!doc" />
-      <SvgPreview v-else-if="ui.view === 'image'" :markup="doc.markup" :alt="doc.name" />
-      <MarkupView v-else :markup="doc.markup" :label="$t('view.markup')" />
+      <EmptyState v-if="!doc || !displayed" />
+      <SvgPreview v-else-if="ui.view === 'image'" :markup="displayed.markup" :alt="doc.name" />
+      <MarkupView v-else :markup="displayed.markup" :label="$t('view.markup')" />
+      <span v-if="displayed?.isOriginal" class="stage__badge">{{ $t('stage.original') }}</span>
     </div>
 
-    <footer class="stage__status">
-      <span>
-        {{ $t('stats.original') }}: <strong>{{ doc ? formatBytes(doc.bytes) : '-' }}</strong>
-      </span>
-      <span>{{ $t('stats.optimized') }}: -</span>
-      <v-spacer />
-      <span v-if="!doc && !xs" class="stage__status-note">{{ $t('stats.noFile') }}</span>
-    </footer>
+    <StageStatus />
   </section>
 </template>
 
@@ -150,20 +154,16 @@ const showImage = computed(() => !doc.value || ui.view === 'image')
 .stage__canvas--markup {
   background: rgb(var(--v-theme-surface));
 }
-.stage__status {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 8px 16px;
-  font-size: 0.8125rem;
-  white-space: nowrap;
-  border-top: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
-  background: rgb(var(--v-theme-surface));
-}
-.stage__status strong {
+.stage__badge {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-start: 12px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
   font-weight: 600;
-}
-.stage__status-note {
-  color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+  background: rgb(var(--v-theme-surface-variant));
+  color: rgb(var(--v-theme-on-surface-variant));
+  pointer-events: none;
 }
 </style>

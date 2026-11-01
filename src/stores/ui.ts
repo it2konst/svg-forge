@@ -9,6 +9,8 @@ export const useUiStore = defineStore('ui', () => {
   /** null = let the layout decide (open on wide screens, closed on narrow ones). */
   const settingsOpen = ref<boolean | null>(null)
   const pasteDialogOpen = ref(false)
+  /** Preview and markup show the original instead of the optimized result. */
+  const showOriginal = ref(false)
 
-  return { view, settingsOpen, pasteDialogOpen }
+  return { view, settingsOpen, pasteDialogOpen, showOriginal }
 })

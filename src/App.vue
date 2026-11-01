@@ -8,6 +8,7 @@ import PasteDialog from '@/components/PasteDialog.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
 import { useLocaleSync } from '@/composables/useLocaleSync'
+import { useOptimizerErrors } from '@/composables/useOptimizerErrors'
 import { usePasteListener } from '@/composables/usePasteListener'
 import { useThemeSync } from '@/composables/useThemeSync'
 import { useUiStore } from '@/stores/ui'
@@ -15,6 +16,7 @@ import { useUiStore } from '@/stores/ui'
 useThemeSync()
 useLocaleSync()
 usePasteListener()
+useOptimizerErrors()
 
 const ui = useUiStore()
 const { lgAndUp } = useDisplay()

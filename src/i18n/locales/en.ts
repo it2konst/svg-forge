@@ -127,10 +127,22 @@ const en = {
     sortDefsChildren: 'Sort children of <defs>',
     removeDesc: 'Remove <desc>',
   },
+  optimizer: {
+    running: 'Optimizing…',
+    errors: {
+      timeout:
+        'Optimization took longer than 20 seconds and was stopped. Try turning off Multipass.',
+      failed: 'SVGO could not optimize this file. The original is shown instead.',
+    },
+  },
+  stage: {
+    original: 'Original',
+  },
   stats: {
     original: 'Original',
     optimized: 'Optimized',
     noFile: 'No file yet',
+    time: 'SVGO took {ms} ms',
   },
 }
 

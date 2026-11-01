@@ -128,10 +128,22 @@ const ru: MessageSchema = {
     sortDefsChildren: 'Отсортировать содержимое <defs>',
     removeDesc: 'Удалить <desc>',
   },
+  optimizer: {
+    running: 'Оптимизация…',
+    errors: {
+      timeout:
+        'Оптимизация шла дольше 20 секунд и была остановлена. Попробуйте выключить «Несколько проходов».',
+      failed: 'SVGO не смог оптимизировать этот файл. Показан исходный вариант.',
+    },
+  },
+  stage: {
+    original: 'Исходный',
+  },
   stats: {
     original: 'Исходный',
     optimized: 'Оптимизированный',
     noFile: 'Файл пока не выбран',
+    time: 'SVGO: {ms} мс',
   },
 }
 
