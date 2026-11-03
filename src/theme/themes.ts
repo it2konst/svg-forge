@@ -32,6 +32,13 @@ export const lightTheme: ThemeDefinition = {
     // Preview checkerboard (transparent areas of an SVG)
     'checker-a': '#FFFFFF',
     'checker-b': '#E6E5E0',
+    // Markup syntax colors, each at least 4.5:1 against the surface
+    'code-tag': '#3550C4',
+    'code-attr': '#8A3FA8',
+    'code-value': '#2B7148',
+    'code-comment': '#6E727B',
+    'code-punct': '#6B6F78',
+    'code-meta': '#A0540C',
   },
   variables: {
     'border-color': '#2A2C31',
@@ -65,6 +72,12 @@ export const darkTheme: ThemeDefinition = {
     'on-info': '#15171C',
     'checker-a': '#262A32',
     'checker-b': '#1E2128',
+    'code-tag': '#8EA2F5',
+    'code-attr': '#D3A6F0',
+    'code-value': '#8FD3A8',
+    'code-comment': '#8A919D',
+    'code-punct': '#9097A3',
+    'code-meta': '#E8B365',
   },
   variables: {
     'border-color': '#DADDE3',

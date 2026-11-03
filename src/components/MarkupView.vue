@@ -1,32 +1,51 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, useTemplateRef, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { createCodeView } from '@/editor/codeView'
+
 /**
- * Plain, read-only view of the markup. Text interpolation escapes everything,
- * so this is safe for any input. Syntax highlighting (CodeMirror) comes later.
+ * Read-only markup with syntax highlighting, line numbers and search (Ctrl+F).
+ * CodeMirror renders text, never HTML, so this is safe for any input.
+ * The component is loaded on demand: CodeMirror is not in the main bundle.
  */
-defineProps<{ markup: string; label: string }>()
+const props = defineProps<{ markup: string; label: string }>()
+
+const { locale } = useI18n()
+const host = useTemplateRef<HTMLDivElement>('host')
+let codeView: ReturnType<typeof createCodeView> | null = null
+
+onMounted(() => {
+  if (!host.value) return
+  codeView = createCodeView({
+    parent: host.value,
+    doc: props.markup,
+    label: props.label,
+    locale: locale.value,
+  })
+})
+
+watch(
+  () => props.markup,
+  (markup) => codeView?.setDoc(markup),
+)
+
+watch([locale, () => props.label], ([nextLocale, nextLabel]) =>
+  codeView?.setLocale(nextLocale, nextLabel),
+)
+
+onBeforeUnmount(() => {
+  codeView?.destroy()
+  codeView = null
+})
 </script>
 
 <template>
-  <pre class="markup-view" tabindex="0" :aria-label="label"><code>{{ markup }}</code></pre>
+  <div ref="host" class="markup-view" />
 </template>
 
 <style scoped>
 .markup-view {
   position: absolute;
   inset: 0;
-  margin: 0;
-  padding: 16px 20px;
-  overflow: auto;
-  font-family: var(--app-font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.65;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere; /* minified SVG is often one very long line */
-  background: rgb(var(--v-theme-surface));
-  color: rgb(var(--v-theme-on-surface));
-}
-.markup-view:focus-visible {
-  outline: 2px solid rgb(var(--v-theme-primary));
-  outline-offset: -2px;
 }
 </style>

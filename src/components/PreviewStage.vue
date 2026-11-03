@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { useDisplay } from 'vuetify'
 import EmptyState from '@/components/EmptyState.vue'
-import MarkupView from '@/components/MarkupView.vue'
 import PreviewBackgroundToggle from '@/components/PreviewBackgroundToggle.vue'
 import StageStatus from '@/components/StageStatus.vue'
 import SvgPreview from '@/components/SvgPreview.vue'
@@ -11,6 +10,9 @@ import { useDocumentStore } from '@/stores/document'
 import { useOptimizerStore } from '@/stores/optimizer'
 import { useSettingsStore } from '@/stores/settings'
 import { useUiStore } from '@/stores/ui'
+
+// CodeMirror is loaded only when someone opens the markup view.
+const MarkupView = defineAsyncComponent(() => import('@/components/MarkupView.vue'))
 
 const settings = useSettingsStore()
 const ui = useUiStore()
