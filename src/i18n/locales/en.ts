@@ -144,6 +144,14 @@ const en = {
       failed: 'SVGO could not optimize this file. The original is shown instead.',
     },
   },
+  export: {
+    download: 'Download',
+    downloadHint: 'Download the optimized SVG (Ctrl+S)',
+    copy: 'Copy optimized markup',
+    copied: 'Optimized markup copied to the clipboard.',
+    copyFailed:
+      'The browser did not allow access to the clipboard. Open the markup view and copy from there.',
+  },
   stage: {
     original: 'Original',
   },

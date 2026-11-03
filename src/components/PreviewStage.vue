@@ -3,6 +3,7 @@ import { computed, defineAsyncComponent } from 'vue'
 import { useDisplay } from 'vuetify'
 import EmptyState from '@/components/EmptyState.vue'
 import PreviewBackgroundToggle from '@/components/PreviewBackgroundToggle.vue'
+import ResultActions from '@/components/ResultActions.vue'
 import StageStatus from '@/components/StageStatus.vue'
 import SvgPreview from '@/components/SvgPreview.vue'
 import { iconClose, iconCode, iconFile, iconPreview } from '@/icons'
@@ -90,6 +91,7 @@ const displayed = computed(() => {
       <SvgPreview v-else-if="ui.view === 'image'" :markup="displayed.markup" :alt="doc.name" />
       <MarkupView v-else :markup="displayed.markup" :label="$t('view.markup')" />
       <span v-if="displayed?.isOriginal" class="stage__badge">{{ $t('stage.original') }}</span>
+      <ResultActions v-if="doc" />
     </div>
 
     <StageStatus />
