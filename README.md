@@ -8,7 +8,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. Opening and optimizing SVG works; download, copy and syntax highlighting come next. See the [roadmap](#roadmap).
+> Work in progress. The full single-file workflow works: open, optimize, inspect, download. Comparison slider and presets come next. See the [roadmap](#roadmap).
 
 ## Features
 
@@ -23,7 +23,10 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - Demo file to try the app without your own SVG
 - Inline SVG copied from HTML works: missing `xmlns` and `xmlns:xlink` are added automatically
 - Clear, translated errors for empty input, non-SVG files, broken markup and files over 10 MB
-- Safe image preview and a read-only markup view
+- Safe image preview
+- Markup view with syntax highlighting, line numbers and search (CodeMirror 6, loaded on demand)
+- Download the result (also Ctrl+S) or copy its markup
+- Optional gzip size comparison, measured with the browser's own CompressionStream
 - Light, dark and system themes, tuned for long sessions: no pure white or black, softened text contrast
 - English and Russian interface; the browser language is picked on first visit
 - Preview background independent of the theme: checkerboard, light or dark
@@ -32,8 +35,6 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- Gzip size statistics, download and copy
-- Markup view with syntax highlighting
 - Before / after comparison slider
 - Export as a Vue component, data URI or CSS background
 - Batch processing with zip download
@@ -62,6 +63,7 @@ SVG files can contain scripts and event handlers. svg-forge never injects user S
 | Fonts     | Onest and JetBrains Mono, self-hosted via Fontsource  |
 | Quality   | ESLint (flat config), Prettier, vue-tsc               |
 | Optimizer | SVGO 4 in a Web Worker, Comlink                       |
+| Code view | CodeMirror 6                                          |
 | Hosting   | Vercel                                                |
 
 ## Getting started
@@ -89,6 +91,7 @@ src/
   components/    UI components (header, preview stage, settings panel…)
   composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
+  editor/        CodeMirror setup for the markup view
   optimizer/     SVGO worker, worker client, plugin catalog, settings to SVGO config
   plugins/       Vuetify setup
   stores/        Pinia: current document, optimizer, notifications, settings, UI state
@@ -101,7 +104,7 @@ src/
 
 1. ~~Load SVG: open file, paste markup, drag and drop, demo file~~ ✓
 2. ~~SVGO in a Web Worker, global options and plugin toggles~~ ✓
-3. Markup view (CodeMirror), size statistics, download and copy
+3. ~~Markup view (CodeMirror), size statistics, download and copy~~ ✓
 4. Comparison slider, presets
 5. Export to Vue component, data URI, CSS
 6. Batch processing and sprites
