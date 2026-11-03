@@ -43,6 +43,7 @@ const ru: MessageSchema = {
     reset: 'Сбросить',
     resetDone: 'Настройки сброшены к значениям по умолчанию.',
     showOriginal: 'Показать исходный',
+    compareGzip: 'Сравнивать размер после gzip',
     multipass: 'Несколько проходов',
     pretty: 'Форматировать код',
     floatPrecision: 'Точность чисел',
@@ -152,6 +153,7 @@ const ru: MessageSchema = {
     optimized: 'Оптимизированный',
     noFile: 'Файл пока не выбран',
     time: 'SVGO: {ms} мс',
+    gzipHint: 'Размеры после сжатия gzip, в котором сервер обычно отдаёт файл',
   },
 }
 

@@ -9,11 +9,13 @@ import {
   type OptimizerSettings,
 } from '@/optimizer/config'
 import { useDocumentStore } from '@/stores/document'
+import { gzipSize } from '@/utils/gzip'
 import { byteLength } from '@/utils/svg'
 
 export interface OptimizedResult {
   markup: string
   bytes: number
+  gzipBytes: number
   /** Time spent in SVGO, ms. */
   ms: number
 }
@@ -46,6 +48,8 @@ export const useOptimizerStore = defineStore('optimizer', () => {
   const result = shallowRef<OptimizedResult | null>(null)
   const status = ref<OptimizerStatus>('idle')
   const error = ref<OptimizerError | null>(null)
+  /** Gzipped size of the original document, for the "compare gzipped" mode. */
+  const originalGzipBytes = ref<number | null>(null)
 
   let runId = 0
 
@@ -62,7 +66,12 @@ export const useOptimizerStore = defineStore('optimizer', () => {
     try {
       const output = await optimizeSvg(doc.markup, buildSvgoConfig(settings.value))
       if (id !== runId) return // a newer run has started since
-      result.value = { markup: output.markup, bytes: byteLength(output.markup), ms: output.ms }
+      result.value = {
+        markup: output.markup,
+        bytes: byteLength(output.markup),
+        gzipBytes: output.gzipBytes,
+        ms: output.ms,
+      }
       status.value = 'done'
       error.value = null
     } catch (cause) {
@@ -84,9 +93,15 @@ export const useOptimizerStore = defineStore('optimizer', () => {
   // New document: drop the old result right away, then optimize.
   watch(
     () => documentStore.current,
-    () => {
+    (doc) => {
       result.value = null
+      originalGzipBytes.value = null
       void run()
+      if (doc) {
+        void gzipSize(doc.markup).then((size) => {
+          if (documentStore.current === doc) originalGzipBytes.value = size
+        })
+      }
     },
     { immediate: true },
   )
@@ -94,5 +109,5 @@ export const useOptimizerStore = defineStore('optimizer', () => {
   // Settings: wait until the user stops dragging a slider or clicking switches.
   watchDebounced(settings, () => void run(), { deep: true, debounce: 150 })
 
-  return { settings, result, status, error, resetSettings }
+  return { settings, result, status, error, originalGzipBytes, resetSettings }
 })

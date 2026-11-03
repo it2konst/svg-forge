@@ -4,18 +4,21 @@
  */
 import { expose } from 'comlink'
 import { type Config, optimize } from 'svgo/browser'
+import { gzipSize } from '@/utils/gzip'
 
 export interface OptimizeOutput {
   markup: string
   /** Time spent inside SVGO, in milliseconds. */
   ms: number
+  gzipBytes: number
 }
 
 const api = {
-  optimize(markup: string, config: Config): OptimizeOutput {
+  async optimize(markup: string, config: Config): Promise<OptimizeOutput> {
     const start = performance.now()
     const { data } = optimize(markup, config)
-    return { markup: data, ms: performance.now() - start }
+    const ms = performance.now() - start
+    return { markup: data, ms, gzipBytes: await gzipSize(data) }
   },
 }
 

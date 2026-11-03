@@ -7,11 +7,13 @@ import { PRECISION_MAX, PRECISION_MIN, isPluginEnabled } from '@/optimizer/confi
 import { PLUGIN_GROUPS, PLUGINS } from '@/optimizer/plugins'
 import { useNotificationsStore } from '@/stores/notifications'
 import { useOptimizerStore } from '@/stores/optimizer'
+import { useSettingsStore } from '@/stores/settings'
 import { useUiStore } from '@/stores/ui'
 
 /** Right-hand panel: global SVGO options and one switch per plugin, grouped. */
 const { t } = useI18n()
 const optimizer = useOptimizerStore()
+const appSettings = useSettingsStore()
 const ui = useUiStore()
 const notifications = useNotificationsStore()
 
@@ -51,6 +53,14 @@ function reset() {
       <v-switch
         v-model="ui.showOriginal"
         :label="$t('settings.showOriginal')"
+        class="settings-switch"
+        color="primary"
+        density="compact"
+        hide-details
+      />
+      <v-switch
+        v-model="appSettings.compareGzip"
+        :label="$t('settings.compareGzip')"
         class="settings-switch"
         color="primary"
         density="compact"

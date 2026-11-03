@@ -20,8 +20,11 @@ export const useSettingsStore = defineStore('settings', () => {
     'checkerboard',
   )
 
+  /** Status bar compares gzipped sizes, which is what a server usually sends. */
+  const compareGzip = useStorage<boolean>(`${STORAGE_PREFIX}compare-gzip`, false)
+
   // A hand-edited or outdated value in storage must not break the UI.
   if (!isAppLocale(locale.value)) locale.value = detectBrowserLocale()
 
-  return { themeMode, locale, previewBackground }
+  return { themeMode, locale, previewBackground, compareGzip }
 })

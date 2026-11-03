@@ -43,6 +43,7 @@ const en = {
     reset: 'Reset',
     resetDone: 'Settings are back to their defaults.',
     showOriginal: 'Show original',
+    compareGzip: 'Compare gzipped sizes',
     multipass: 'Multipass',
     pretty: 'Prettify markup',
     floatPrecision: 'Number precision',
@@ -151,6 +152,7 @@ const en = {
     optimized: 'Optimized',
     noFile: 'No file yet',
     time: 'SVGO took {ms} ms',
+    gzipHint: 'Sizes after gzip compression, as a web server usually sends the file',
   },
 }
 
