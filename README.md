@@ -8,7 +8,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. The full single-file workflow works: open, optimize, inspect, download. Comparison slider and presets come next. See the [roadmap](#roadmap).
+> Work in progress. The full single-file workflow works: open, optimize, inspect, download. Export to a Vue component, data URI and CSS comes next. See the [roadmap](#roadmap).
 
 ## Features
 
@@ -17,7 +17,9 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - SVGO 4 runs in a Web Worker, so the interface never freezes; the result updates live as options change
 - Global options (multipass, number and transform precision, prettify) and switches for 47 SVGO plugins in five groups, saved between visits
 - Optimized size and the size change right in the status bar
-- "Show original" to compare with the source
+- Before / after slider: drag it, click to it or move it with the arrow keys
+- "Show original" to switch the whole view to the source
+- Presets: four built-in (SVGO default, Keep structure, Maximum compression, Inline icons) and your own, saved in the browser
 - Scripts and event handlers are removed from the output by default
 - Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
 - Demo file to try the app without your own SVG
@@ -35,11 +37,9 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- Before / after comparison slider
 - Export as a Vue component, data URI or CSS background
 - Batch processing with zip download
 - SVG sprite generation
-- Saved option presets
 - Offline support (PWA)
 
 ## Security
@@ -105,7 +105,7 @@ src/
 1. ~~Load SVG: open file, paste markup, drag and drop, demo file~~ ✓
 2. ~~SVGO in a Web Worker, global options and plugin toggles~~ ✓
 3. ~~Markup view (CodeMirror), size statistics, download and copy~~ ✓
-4. Comparison slider, presets
+4. ~~Comparison slider, presets~~ ✓
 5. Export to Vue component, data URI, CSS
 6. Batch processing and sprites
 7. PWA
