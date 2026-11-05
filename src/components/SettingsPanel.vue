@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import PrecisionSlider from '@/components/PrecisionSlider.vue'
+import PresetPicker from '@/components/PresetPicker.vue'
 import { iconReset } from '@/icons'
 import { PRECISION_MAX, PRECISION_MIN, isPluginEnabled } from '@/optimizer/config'
 import { PLUGIN_GROUPS, PLUGINS } from '@/optimizer/plugins'
@@ -46,6 +47,8 @@ function reset() {
         {{ $t('settings.reset') }}
       </v-btn>
     </div>
+
+    <PresetPicker class="mt-2" />
 
     <section class="settings-panel__section" aria-labelledby="settings-global">
       <h3 id="settings-global" class="settings-panel__heading">{{ $t('settings.global') }}</h3>

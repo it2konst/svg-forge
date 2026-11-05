@@ -81,6 +81,30 @@ const en = {
     kb: 'KB',
     mb: 'MB',
   },
+  presets: {
+    label: 'Preset',
+    custom: 'Custom settings',
+    builtIn: 'Built-in',
+    builtins: {
+      default: {
+        name: 'SVGO default',
+        description: 'The standard, safe set of optimizations. A good start for any file.',
+      },
+      safe: {
+        name: 'Keep structure',
+        description:
+          'Keeps IDs, groups and shapes as written, for SVG styled with CSS or animated with JavaScript.',
+      },
+      maximum: {
+        name: 'Maximum compression',
+        description: 'Lower precision and extra plugins. Check the result in Compare.',
+      },
+      inline: {
+        name: 'Inline icons',
+        description: 'For SVG pasted into HTML or a Vue template: no width, height or xmlns.',
+      },
+    },
+  },
   pluginGroups: {
     cleanup: 'Cleanup',
     numbers: 'Numbers and paths',

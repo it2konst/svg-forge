@@ -82,6 +82,31 @@ const ru: MessageSchema = {
     kb: 'КБ',
     mb: 'МБ',
   },
+  presets: {
+    label: 'Пресет',
+    custom: 'Свои настройки',
+    builtIn: 'Встроенные',
+    builtins: {
+      default: {
+        name: 'SVGO по умолчанию',
+        description: 'Стандартный безопасный набор оптимизаций. Хорошее начало для любого файла.',
+      },
+      safe: {
+        name: 'Сохранить структуру',
+        description:
+          'Не трогает ID, группы и фигуры, для SVG со стилями в CSS или анимацией на JavaScript.',
+      },
+      maximum: {
+        name: 'Максимальное сжатие',
+        description: 'Меньше точность и дополнительные плагины. Проверьте результат в «Сравнении».',
+      },
+      inline: {
+        name: 'Инлайн-иконки',
+        description:
+          'Для SVG, вставляемого прямо в HTML или шаблон Vue: без width, height и xmlns.',
+      },
+    },
+  },
   pluginGroups: {
     cleanup: 'Очистка',
     numbers: 'Числа и пути',

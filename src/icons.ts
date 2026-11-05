@@ -18,6 +18,8 @@ export {
   mdiContentCopy as iconCopy,
   mdiCheckerboard as iconCheckerboard,
   mdiCheck as iconCheck,
+  mdiChevronDown as iconChevronDown,
+  mdiBookmarkMultipleOutline as iconPreset,
   mdiClose as iconClose,
   mdiCompare as iconCompare,
   mdiArrowLeftRight as iconCompareHandle,
