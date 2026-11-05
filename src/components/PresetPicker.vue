@@ -1,60 +1,121 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { iconCheck, iconChevronDown, iconPreset } from '@/icons'
+import SavePresetDialog from '@/components/SavePresetDialog.vue'
+import { iconCheck, iconChevronDown, iconDelete, iconPreset, iconSave } from '@/icons'
 import { BUILTIN_PRESETS } from '@/optimizer/presets'
+import { useNotificationsStore } from '@/stores/notifications'
 import { usePresetsStore } from '@/stores/presets'
 
-/** A menu of ready-made settings. Shows "Custom settings" when nothing matches. */
+/**
+ * Built-in presets and the user's own, in one menu.
+ * Shows "Custom settings" when the current settings match none of them.
+ */
 const { t } = useI18n()
 const presets = usePresetsStore()
+const notifications = useNotificationsStore()
+
+const saveDialogOpen = ref(false)
 
 const activeName = computed(() => {
   const active = presets.active
   if (!active) return t('presets.custom')
-  return t(`presets.builtins.${active.id}.name`)
+  if (active.kind === 'builtin') return t(`presets.builtins.${active.id}.name`)
+  return presets.userPresets.find((p) => p.id === active.id)?.name ?? t('presets.custom')
 })
 
-const isActive = (id: string) => presets.active?.kind === 'builtin' && presets.active.id === id
+const isActive = (kind: 'builtin' | 'user', id: string) =>
+  presets.active?.kind === kind && presets.active.id === id
+
+function remove(id: string) {
+  const removed = presets.remove(id)
+  if (removed) notifications.notify(t('presets.deleted', { name: removed.name }), 'info')
+}
 </script>
 
 <template>
-  <v-menu location="bottom start" max-width="320">
-    <template #activator="{ props: menuProps }">
-      <v-btn
-        v-bind="menuProps"
-        variant="outlined"
-        rounded="lg"
-        block
-        class="preset-picker"
-        :aria-label="`${t('presets.label')}: ${activeName}`"
-      >
-        <v-icon :icon="iconPreset" start />
-        <span class="preset-picker__text">
-          <span class="preset-picker__label">{{ t('presets.label') }}</span>
-          <span class="preset-picker__name">{{ activeName }}</span>
-        </span>
-        <v-icon :icon="iconChevronDown" end />
-      </v-btn>
-    </template>
+  <!-- One root, so a class set by the parent lands on it. -->
+  <div>
+    <v-menu location="bottom start" max-width="320">
+      <template #activator="{ props: menuProps }">
+        <v-btn
+          v-bind="menuProps"
+          variant="outlined"
+          rounded="lg"
+          block
+          class="preset-picker"
+          :aria-label="`${t('presets.label')}: ${activeName}`"
+        >
+          <v-icon :icon="iconPreset" start />
+          <span class="preset-picker__text">
+            <span class="preset-picker__label">{{ t('presets.label') }}</span>
+            <span class="preset-picker__name">{{ activeName }}</span>
+          </span>
+          <v-icon :icon="iconChevronDown" end />
+        </v-btn>
+      </template>
 
-    <v-list density="compact" class="preset-picker__list">
-      <v-list-subheader>{{ t('presets.builtIn') }}</v-list-subheader>
-      <v-list-item
-        v-for="preset in BUILTIN_PRESETS"
-        :key="preset.id"
-        :title="t(`presets.builtins.${preset.id}.name`)"
-        :subtitle="t(`presets.builtins.${preset.id}.description`)"
-        :active="isActive(preset.id)"
-        lines="two"
-        @click="presets.applyBuiltin(preset.id)"
-      >
-        <template v-if="isActive(preset.id)" #append>
-          <v-icon :icon="iconCheck" size="small" />
+      <v-list density="compact" class="preset-picker__list">
+        <v-list-subheader>{{ t('presets.builtIn') }}</v-list-subheader>
+        <v-list-item
+          v-for="preset in BUILTIN_PRESETS"
+          :key="preset.id"
+          :title="t(`presets.builtins.${preset.id}.name`)"
+          :subtitle="t(`presets.builtins.${preset.id}.description`)"
+          :active="isActive('builtin', preset.id)"
+          lines="two"
+          @click="presets.applyBuiltin(preset.id)"
+        >
+          <template v-if="isActive('builtin', preset.id)" #append>
+            <v-icon :icon="iconCheck" size="small" />
+          </template>
+        </v-list-item>
+
+        <template v-if="presets.userPresets.length">
+          <v-divider class="my-1" />
+          <v-list-subheader>{{ t('presets.yours') }}</v-list-subheader>
+          <v-list-item
+            v-for="preset in presets.userPresets"
+            :key="preset.id"
+            :title="preset.name"
+            :active="isActive('user', preset.id)"
+            @click="presets.applyUser(preset.id)"
+          >
+            <template #append>
+              <v-icon
+                v-if="isActive('user', preset.id)"
+                :icon="iconCheck"
+                size="small"
+                class="me-1"
+              />
+              <v-btn
+                icon
+                size="x-small"
+                variant="text"
+                :aria-label="t('presets.delete', { name: preset.name })"
+                @click.stop="remove(preset.id)"
+              >
+                <v-icon :icon="iconDelete" size="small" />
+                <v-tooltip activator="parent">{{
+                  t('presets.delete', { name: preset.name })
+                }}</v-tooltip>
+              </v-btn>
+            </template>
+          </v-list-item>
         </template>
-      </v-list-item>
-    </v-list>
-  </v-menu>
+
+        <v-divider class="my-1" />
+        <v-list-item
+          :prepend-icon="iconSave"
+          :title="t('presets.save')"
+          base-color="primary"
+          @click="saveDialogOpen = true"
+        />
+      </v-list>
+    </v-menu>
+
+    <SavePresetDialog v-model="saveDialogOpen" />
+  </div>
 </template>
 
 <style scoped>

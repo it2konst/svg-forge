@@ -85,6 +85,21 @@ const en = {
     label: 'Preset',
     custom: 'Custom settings',
     builtIn: 'Built-in',
+    yours: 'Your presets',
+    save: 'Save as preset…',
+    delete: 'Delete "{name}"',
+    created: 'Preset "{name}" saved.',
+    updated: 'Preset "{name}" updated.',
+    deleted: 'Preset "{name}" deleted.',
+    dialog: {
+      title: 'Save preset',
+      name: 'Preset name',
+      nameRequired: 'Enter a name for the preset.',
+      overwrite: 'A preset with this name exists and will be updated.',
+      cancel: 'Cancel',
+      save: 'Save',
+      update: 'Update',
+    },
     builtins: {
       default: {
         name: 'SVGO default',

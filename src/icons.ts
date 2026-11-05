@@ -21,6 +21,8 @@ export {
   mdiChevronDown as iconChevronDown,
   mdiBookmarkMultipleOutline as iconPreset,
   mdiClose as iconClose,
+  mdiDeleteOutline as iconDelete,
+  mdiContentSaveOutline as iconSave,
   mdiCompare as iconCompare,
   mdiArrowLeftRight as iconCompareHandle,
   mdiRestore as iconReset,

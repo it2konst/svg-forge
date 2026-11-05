@@ -86,6 +86,21 @@ const ru: MessageSchema = {
     label: 'Пресет',
     custom: 'Свои настройки',
     builtIn: 'Встроенные',
+    yours: 'Мои пресеты',
+    save: 'Сохранить как пресет…',
+    delete: 'Удалить «{name}»',
+    created: 'Пресет «{name}» сохранён.',
+    updated: 'Пресет «{name}» обновлён.',
+    deleted: 'Пресет «{name}» удалён.',
+    dialog: {
+      title: 'Сохранить пресет',
+      name: 'Название пресета',
+      nameRequired: 'Введите название пресета.',
+      overwrite: 'Пресет с таким названием уже есть и будет обновлён.',
+      cancel: 'Отмена',
+      save: 'Сохранить',
+      update: 'Обновить',
+    },
     builtins: {
       default: {
         name: 'SVGO по умолчанию',
