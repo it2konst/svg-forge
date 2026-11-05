@@ -1,32 +1,10 @@
 <script setup lang="ts">
-import { onScopeDispose, ref, watch } from 'vue'
+import { useSvgBlobUrl } from '@/composables/useSvgBlobUrl'
 
-/**
- * Renders SVG markup safely.
- *
- * The markup becomes a Blob and is shown through <img src="blob:…">. An SVG loaded
- * as an image is sandboxed by the browser: scripts and event handlers never run and
- * external resources (images, fonts, CSS) never load. Never use v-html for user SVG.
- */
+/** Renders SVG markup safely, through <img src="blob:…"> (see useSvgBlobUrl). */
 const props = defineProps<{ markup: string; alt: string }>()
 
-const src = ref<string>()
-
-function release() {
-  if (src.value) URL.revokeObjectURL(src.value)
-  src.value = undefined
-}
-
-watch(
-  () => props.markup,
-  (markup) => {
-    release() // free the previous blob, or every new file would leak memory
-    src.value = URL.createObjectURL(new Blob([markup], { type: 'image/svg+xml' }))
-  },
-  { immediate: true },
-)
-
-onScopeDispose(release)
+const src = useSvgBlobUrl(() => props.markup)
 </script>
 
 <template>
