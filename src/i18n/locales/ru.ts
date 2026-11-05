@@ -24,6 +24,7 @@ const ru: MessageSchema = {
   view: {
     label: 'Вид',
     image: 'Изображение',
+    compare: 'Сравнение',
     markup: 'Код',
   },
   previewBg: {
@@ -155,6 +156,11 @@ const ru: MessageSchema = {
   },
   stage: {
     original: 'Исходный',
+    optimized: 'Оптимизированный',
+  },
+  compare: {
+    slider: 'Граница между исходным и оптимизированным изображением',
+    valueText: 'исходного {percent}%',
   },
   stats: {
     original: 'Исходный',

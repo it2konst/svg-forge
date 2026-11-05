@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useDisplay } from 'vuetify'
 import { type PreviewBackground, useSettingsStore } from '@/stores/settings'
 
 /**
@@ -7,11 +10,36 @@ import { type PreviewBackground, useSettingsStore } from '@/stores/settings'
  */
 const settings = useSettingsStore()
 
+const { t } = useI18n()
+const { xs } = useDisplay()
+
 const options: PreviewBackground[] = ['checkerboard', 'light', 'dark']
+
+/** On phones a single button cycles through the options, to save toolbar space. */
+function cycle() {
+  const index = options.indexOf(settings.previewBackground)
+  settings.previewBackground = options[(index + 1) % options.length] ?? 'checkerboard'
+}
+
+const cycleLabel = computed(
+  () => `${t('previewBg.label')}: ${t(`previewBg.${settings.previewBackground}`)}`,
+)
 </script>
 
 <template>
+  <v-btn
+    v-if="xs"
+    variant="outlined"
+    size="small"
+    rounded="lg"
+    class="bg-cycle"
+    :aria-label="cycleLabel"
+    @click="cycle"
+  >
+    <span class="swatch" :class="`swatch--${settings.previewBackground}`" />
+  </v-btn>
   <v-btn-toggle
+    v-else
     v-model="settings.previewBackground"
     mandatory
     density="compact"
@@ -34,6 +62,12 @@ const options: PreviewBackground[] = ['checkerboard', 'light', 'dark']
 </template>
 
 <style scoped>
+.bg-cycle {
+  min-width: 40px;
+  height: 32px;
+  padding: 0 10px;
+  border-color: rgba(var(--v-border-color), var(--v-border-opacity));
+}
 .swatch {
   width: 16px;
   height: 16px;

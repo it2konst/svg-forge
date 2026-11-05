@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
 import { useDisplay } from 'vuetify'
+import CompareView from '@/components/CompareView.vue'
 import EmptyState from '@/components/EmptyState.vue'
 import PreviewBackgroundToggle from '@/components/PreviewBackgroundToggle.vue'
 import ResultActions from '@/components/ResultActions.vue'
 import StageStatus from '@/components/StageStatus.vue'
 import SvgPreview from '@/components/SvgPreview.vue'
-import { iconClose, iconCode, iconFile, iconPreview } from '@/icons'
+import { iconClose, iconCode, iconCompare, iconFile, iconPreview } from '@/icons'
 import { useDocumentStore } from '@/stores/document'
 import { useOptimizerStore } from '@/stores/optimizer'
 import { useSettingsStore } from '@/stores/settings'
@@ -23,16 +24,19 @@ const { xs } = useDisplay()
 
 const viewOptions = [
   { value: 'image', icon: iconPreview },
+  { value: 'compare', icon: iconCompare },
   { value: 'markup', icon: iconCode },
 ] as const
 
 const doc = computed(() => documentStore.current)
-const showImage = computed(() => !doc.value || ui.view === 'image')
+const showImage = computed(() => !doc.value || ui.view !== 'markup')
+/** Compare needs a result; until it's ready the stage shows the original instead. */
+const comparing = computed(() => ui.view === 'compare' && optimizer.result !== null)
 
 /** What the stage shows: the optimized result, unless the user asked for the original. */
 const displayed = computed(() => {
   if (!doc.value) return null
-  const optimized = !ui.showOriginal ? optimizer.result : null
+  const optimized = !ui.showOriginal || ui.view === 'compare' ? optimizer.result : null
   return optimized
     ? { markup: optimized.markup, isOriginal: false }
     : { markup: doc.value.markup, isOriginal: true }
@@ -65,7 +69,7 @@ const displayed = computed(() => {
       </v-btn-toggle>
 
       <div v-if="doc" class="stage__file">
-        <v-icon :icon="iconFile" size="small" class="stage__file-icon" />
+        <v-icon v-if="!xs" :icon="iconFile" size="small" class="stage__file-icon" />
         <span class="stage__file-name" :title="doc.name">{{ doc.name }}</span>
         <v-btn
           icon
@@ -88,9 +92,21 @@ const displayed = computed(() => {
       :class="showImage ? `stage__canvas--${settings.previewBackground}` : 'stage__canvas--markup'"
     >
       <EmptyState v-if="!doc || !displayed" />
-      <SvgPreview v-else-if="ui.view === 'image'" :markup="displayed.markup" :alt="doc.name" />
-      <MarkupView v-else :markup="displayed.markup" :label="$t('view.markup')" />
-      <span v-if="displayed?.isOriginal" class="stage__badge">{{ $t('stage.original') }}</span>
+      <CompareView
+        v-else-if="comparing && optimizer.result"
+        :original="doc.markup"
+        :optimized="optimizer.result.markup"
+        :alt="doc.name"
+      />
+      <MarkupView
+        v-else-if="ui.view === 'markup'"
+        :markup="displayed.markup"
+        :label="$t('view.markup')"
+      />
+      <SvgPreview v-else :markup="displayed.markup" :alt="doc.name" />
+      <span v-if="displayed?.isOriginal && !comparing" class="stage__badge">
+        {{ $t('stage.original') }}
+      </span>
       <ResultActions v-if="doc" />
     </div>
 

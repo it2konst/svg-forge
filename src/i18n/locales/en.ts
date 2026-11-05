@@ -24,6 +24,7 @@ const en = {
   view: {
     label: 'View',
     image: 'Image',
+    compare: 'Compare',
     markup: 'Markup',
   },
   previewBg: {
@@ -154,6 +155,11 @@ const en = {
   },
   stage: {
     original: 'Original',
+    optimized: 'Optimized',
+  },
+  compare: {
+    slider: 'Divider between the original and the optimized image',
+    valueText: '{percent}% original',
   },
   stats: {
     original: 'Original',

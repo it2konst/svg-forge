@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-export type StageView = 'image' | 'markup'
+export type StageView = 'image' | 'compare' | 'markup'
 
 /** Transient UI state: not persisted, resets on reload. */
 export const useUiStore = defineStore('ui', () => {
