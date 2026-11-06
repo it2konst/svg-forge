@@ -189,6 +189,7 @@ const en = {
     title: 'Export as code',
     close: 'Close',
     copy: 'Copy',
+    downloadFile: 'Download {name}',
     copied: 'Code copied to the clipboard.',
     copyFailed:
       'The browser did not allow access to the clipboard. Select the code and copy it by hand.',

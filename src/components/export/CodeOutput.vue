@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useDisplay } from 'vuetify'
 import { useFormatBytes } from '@/composables/useFormatBytes'
 import { iconCopy, iconDownload } from '@/icons'
 import { useNotificationsStore } from '@/stores/notifications'
@@ -19,6 +20,7 @@ const props = defineProps<{
 const { t } = useI18n()
 const { formatBytes } = useFormatBytes()
 const notifications = useNotificationsStore()
+const { xs } = useDisplay()
 
 const size = computed(() => formatBytes(byteLength(props.code)))
 
@@ -42,8 +44,17 @@ function download() {
     <div class="code-output__bar">
       <span class="code-output__size">{{ size }}</span>
       <v-spacer />
-      <v-btn v-if="fileName" :prepend-icon="iconDownload" variant="tonal" @click="download">
-        {{ fileName }}
+      <!-- On phones the file name would push Copy onto its own line. -->
+      <v-btn
+        v-if="fileName"
+        :prepend-icon="xs ? undefined : iconDownload"
+        :icon="xs"
+        :aria-label="t('exportCode.downloadFile', { name: fileName })"
+        variant="tonal"
+        @click="download"
+      >
+        <v-icon v-if="xs" :icon="iconDownload" />
+        <template v-else>{{ fileName }}</template>
       </v-btn>
       <v-btn :prepend-icon="iconCopy" variant="flat" color="primary" @click="copy">
         {{ t('exportCode.copy') }}
