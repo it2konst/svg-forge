@@ -14,6 +14,7 @@ export {
   mdiGithub as iconGithub,
   mdiEyeOutline as iconPreview,
   mdiCodeTags as iconCode,
+  mdiCodeBraces as iconExport,
   mdiDownload as iconDownload,
   mdiContentCopy as iconCopy,
   mdiCheckerboard as iconCheckerboard,

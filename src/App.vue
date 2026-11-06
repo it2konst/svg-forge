@@ -4,6 +4,7 @@ import { useDisplay } from 'vuetify'
 import AppHeader from '@/components/AppHeader.vue'
 import AppNotifications from '@/components/AppNotifications.vue'
 import DropOverlay from '@/components/DropOverlay.vue'
+import ExportDialog from '@/components/export/ExportDialog.vue'
 import PasteDialog from '@/components/PasteDialog.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
@@ -47,6 +48,7 @@ const settingsOpen = computed({
     </v-main>
 
     <PasteDialog />
+    <ExportDialog />
     <DropOverlay />
     <AppNotifications />
   </v-app>

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useDisplay } from 'vuetify'
 import { useResultExport } from '@/composables/useResultExport'
-import { iconCopy, iconDownload } from '@/icons'
+import { iconCopy, iconDownload, iconExport } from '@/icons'
 import { useOptimizerStore } from '@/stores/optimizer'
+import { useUiStore } from '@/stores/ui'
 
-/** Floating actions in the corner of the stage: copy and download the optimized SVG. */
+/** Floating actions in the corner of the stage: export, copy and download the optimized SVG. */
 const { ready, download, copy } = useResultExport()
 const optimizer = useOptimizerStore()
+const ui = useUiStore()
 const { xs } = useDisplay()
 </script>
 
@@ -14,10 +16,23 @@ const { xs } = useDisplay()
   <div class="result-actions">
     <v-btn
       :disabled="!ready"
+      :aria-label="$t('exportCode.open')"
+      variant="tonal"
+      color="primary"
+      class="result-actions__secondary"
+      icon
+      @click="ui.exportDialogOpen = true"
+    >
+      <v-icon :icon="iconExport" />
+      <v-tooltip activator="parent" location="top">{{ $t('exportCode.open') }}</v-tooltip>
+    </v-btn>
+
+    <v-btn
+      :disabled="!ready"
       :aria-label="$t('export.copy')"
       variant="tonal"
       color="primary"
-      class="result-actions__copy"
+      class="result-actions__secondary"
       icon
       @click="copy"
     >
@@ -58,7 +73,7 @@ const { xs } = useDisplay()
   align-items: center;
   gap: 10px;
 }
-.result-actions__copy {
+.result-actions__secondary {
   background: rgb(var(--v-theme-surface));
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }

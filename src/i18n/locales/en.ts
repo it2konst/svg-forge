@@ -184,6 +184,25 @@ const en = {
       failed: 'SVGO could not optimize this file. The original is shown instead.',
     },
   },
+  exportCode: {
+    open: 'Export as code',
+    title: 'Export as code',
+    close: 'Close',
+    copy: 'Copy',
+    copied: 'Code copied to the clipboard.',
+    copyFailed:
+      'The browser did not allow access to the clipboard. Select the code and copy it by hand.',
+    tabs: {
+      uri: 'Data URI',
+    },
+    uri: {
+      intro:
+        'The SVG packed into one string for an img src, a CSS url() or an HTML attribute. URL-encoded is usually smaller and compresses better.',
+      encoding: 'Encoding',
+      url: 'URL-encoded',
+      base64: 'Base64',
+    },
+  },
   export: {
     download: 'Download',
     downloadHint: 'Download the optimized SVG (Ctrl+S)',

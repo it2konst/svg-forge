@@ -11,6 +11,7 @@ export const useUiStore = defineStore('ui', () => {
   const pasteDialogOpen = ref(false)
   /** Preview and markup show the original instead of the optimized result. */
   const showOriginal = ref(false)
+  const exportDialogOpen = ref(false)
 
-  return { view, settingsOpen, pasteDialogOpen, showOriginal }
+  return { view, settingsOpen, pasteDialogOpen, showOriginal, exportDialogOpen }
 })

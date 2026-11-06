@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import { useDocumentStore } from '@/stores/document'
 import { useNotificationsStore } from '@/stores/notifications'
 import { useOptimizerStore } from '@/stores/optimizer'
+import { downloadText } from '@/utils/download'
 
 /** Keeps the original name, so the result can replace the file it came from. */
 export function downloadName(name: string): string {
@@ -27,13 +28,7 @@ export const useResultExport = createSharedComposable(() => {
     const result = optimizer.result
     if (!doc || !result) return
 
-    const url = URL.createObjectURL(new Blob([result.markup], { type: 'image/svg+xml' }))
-    const link = document.createElement('a')
-    link.href = url
-    link.download = downloadName(doc.name)
-    link.click()
-    // The browser has started the download by now; the URL is no longer needed.
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
+    downloadText(result.markup, downloadName(doc.name), 'image/svg+xml')
   }
 
   async function copy() {
