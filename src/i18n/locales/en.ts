@@ -193,8 +193,20 @@ const en = {
     copyFailed:
       'The browser did not allow access to the clipboard. Select the code and copy it by hand.',
     tabs: {
+      vue: 'Vue',
       css: 'CSS',
       uri: 'Data URI',
+    },
+    vue: {
+      intro:
+        'A Vue 3 single-file component with the SVG inline. Pass size for the width and title for an accessible name; class and other attributes go to the <svg>.',
+      name: 'Component name',
+      invalidName: 'PascalCase: starts with a capital Latin letter, letters and digits only.',
+      size: 'Default size',
+      sizeHint: 'A number in px, or a CSS length like 1em',
+      sizeRequired: 'Enter a default size.',
+      currentColor: 'Single color: use the text color (currentColor)',
+      manyColors: 'This SVG uses {count} colors. With currentColor they all become one.',
     },
     css: {
       intro: {

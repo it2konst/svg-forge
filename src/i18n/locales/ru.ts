@@ -194,8 +194,20 @@ const ru: MessageSchema = {
     copied: 'Код скопирован в буфер обмена.',
     copyFailed: 'Браузер не дал доступ к буферу обмена. Выделите код и скопируйте вручную.',
     tabs: {
+      vue: 'Vue',
       css: 'CSS',
       uri: 'Data URI',
+    },
+    vue: {
+      intro:
+        'Однофайловый компонент Vue 3 со встроенным SVG. size задаёт ширину, title даёт доступное имя; class и другие атрибуты попадут на <svg>.',
+      name: 'Имя компонента',
+      invalidName: 'PascalCase: с заглавной латинской буквы, только буквы и цифры.',
+      size: 'Размер по умолчанию',
+      sizeHint: 'Число в px или CSS-длина, например 1em',
+      sizeRequired: 'Укажите размер по умолчанию.',
+      currentColor: 'Один цвет: цвет текста (currentColor)',
+      manyColors: 'В этом SVG цветов: {count}. С currentColor все они станут одним.',
     },
     css: {
       intro: {
