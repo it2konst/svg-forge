@@ -193,7 +193,21 @@ const en = {
     copyFailed:
       'The browser did not allow access to the clipboard. Select the code and copy it by hand.',
     tabs: {
+      css: 'CSS',
       uri: 'Data URI',
+    },
+    css: {
+      intro: {
+        background: 'A CSS class that shows the SVG as a background image, with its own colors.',
+        mask: 'A CSS class that uses the SVG as a mask: only the shape counts, filled with the text color. Recolor it like an icon font.',
+      },
+      className: 'Class name',
+      invalidClass: 'Use Latin letters, digits, - and _, starting with a letter.',
+      mode: 'How to use the SVG',
+      modes: {
+        background: 'Background',
+        mask: 'Mask (text color)',
+      },
     },
     uri: {
       intro:

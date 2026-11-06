@@ -2,8 +2,10 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
+import ExportCss from '@/components/export/ExportCss.vue'
 import ExportDataUri from '@/components/export/ExportDataUri.vue'
 import { iconClose } from '@/icons'
+import { useDocumentStore } from '@/stores/document'
 import { useOptimizerStore } from '@/stores/optimizer'
 import { useUiStore } from '@/stores/ui'
 
@@ -11,11 +13,12 @@ import { useUiStore } from '@/stores/ui'
 const { t } = useI18n()
 const ui = useUiStore()
 const optimizer = useOptimizerStore()
+const documentStore = useDocumentStore()
 const { xs } = useDisplay()
 
-type ExportTab = 'uri'
-const tab = ref<ExportTab>('uri')
-const tabs: ExportTab[] = ['uri']
+type ExportTab = 'css' | 'uri'
+const tab = ref<ExportTab>('css')
+const tabs: ExportTab[] = ['css', 'uri']
 </script>
 
 <template>
@@ -43,8 +46,11 @@ const tabs: ExportTab[] = ['uri']
       </v-tabs>
       <v-divider />
 
-      <v-card-text v-if="optimizer.result" class="pt-4">
+      <v-card-text v-if="optimizer.result && documentStore.current" class="pt-4">
         <v-window v-model="tab">
+          <v-window-item value="css">
+            <ExportCss :markup="optimizer.result.markup" :file-name="documentStore.current.name" />
+          </v-window-item>
           <v-window-item value="uri">
             <ExportDataUri :markup="optimizer.result.markup" />
           </v-window-item>
