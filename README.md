@@ -8,7 +8,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. The full single-file workflow works: open, optimize, inspect, download. Export to a Vue component, data URI and CSS comes next. See the [roadmap](#roadmap).
+> Work in progress. Everything for a single file works, from opening to exporting as code. Batch processing and sprites come next. See the [roadmap](#roadmap).
 
 ## Features
 
@@ -19,6 +19,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - Optimized size and the size change right in the status bar
 - Before / after slider: drag it, click to it or move it with the arrow keys
 - "Show original" to switch the whole view to the source
+- Export as code: a Vue 3 component (`size` and `title` props, optional single color via `currentColor`), a CSS class (background or recolorable mask) or a data URI (URL-encoded or base64)
 - Presets: four built-in (SVGO default, Keep structure, Maximum compression, Inline icons) and your own, saved in the browser
 - Scripts and event handlers are removed from the output by default
 - Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
@@ -37,7 +38,6 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- Export as a Vue component, data URI or CSS background
 - Batch processing with zip download
 - SVG sprite generation
 - Offline support (PWA)
@@ -92,6 +92,7 @@ src/
   composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
   editor/        CodeMirror setup for the markup view
+  export/        Vue component, CSS and data URI generators
   optimizer/     SVGO worker, worker client, plugin catalog, settings to SVGO config
   plugins/       Vuetify setup
   stores/        Pinia: current document, optimizer, notifications, settings, UI state
@@ -106,7 +107,7 @@ src/
 2. ~~SVGO in a Web Worker, global options and plugin toggles~~ ✓
 3. ~~Markup view (CodeMirror), size statistics, download and copy~~ ✓
 4. ~~Comparison slider, presets~~ ✓
-5. Export to Vue component, data URI, CSS
+5. ~~Export to Vue component, data URI, CSS~~ ✓
 6. Batch processing and sprites
 7. PWA
 
