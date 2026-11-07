@@ -2,6 +2,8 @@
 
 [English version](README.md)
 
+[![CI](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml)
+
 Оптимизатор SVG, который работает полностью в браузере. Перетащите SVG, настройте параметры [SVGO](https://github.com/svg/svgo), сравните результат и скачайте его. Файлы обрабатываются на вашем устройстве и никуда не загружаются.
 
 Проект вдохновлён [SVGOMG](https://github.com/jakearchibald/svgomg) Джейка Арчибальда, написан с нуля на Vue 3 и дополнен функциями для фронтенд-разработки.
@@ -62,6 +64,7 @@ SVG-файлы могут содержать скрипты и обработч�
 | i18n          | vue-i18n, связанный с Vuetify через адаптер           |
 | Шрифты        | Onest и JetBrains Mono, локально через Fontsource     |
 | Качество кода | ESLint (flat config), Prettier, vue-tsc               |
+| Тесты         | Vitest с jsdom, CI на GitHub Actions                  |
 | Оптимизатор   | SVGO 4 в Web Worker, Comlink                          |
 | Просмотр кода | CodeMirror 6                                          |
 | Хостинг       | Vercel                                                |
@@ -83,6 +86,9 @@ npm run dev
 | `npm run lint`       | Проверяет код и исправляет что может       |
 | `npm run format`     | Форматирует `src/` через Prettier          |
 | `npm run type-check` | Запускает vue-tsc                          |
+| `npm test`           | Запускает юнит-тесты                       |
+| `npm run test:watch` | Перезапускает тесты при каждом изменении   |
+| `npm run coverage`   | Тесты с отчётом о покрытии                 |
 
 ## Структура
 

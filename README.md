@@ -2,6 +2,8 @@
 
 [Русская версия](README.ru.md)
 
+[![CI](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml)
+
 An SVG optimizer that runs entirely in the browser. Drop in an SVG, tune the [SVGO](https://github.com/svg/svgo) options, compare the result and download it. Files are processed on your device and never uploaded anywhere.
 
 Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), written from scratch with Vue 3 and extended with features for front-end work.
@@ -62,6 +64,7 @@ SVG files can contain scripts and event handlers. svg-forge never injects user S
 | i18n      | vue-i18n, connected to Vuetify through its adapter    |
 | Fonts     | Onest and JetBrains Mono, self-hosted via Fontsource  |
 | Quality   | ESLint (flat config), Prettier, vue-tsc               |
+| Tests     | Vitest with jsdom, GitHub Actions CI                  |
 | Optimizer | SVGO 4 in a Web Worker, Comlink                       |
 | Code view | CodeMirror 6                                          |
 | Hosting   | Vercel                                                |
@@ -83,6 +86,9 @@ npm run dev
 | `npm run lint`       | Lint and auto-fix                   |
 | `npm run format`     | Format `src/` with Prettier         |
 | `npm run type-check` | Run vue-tsc                         |
+| `npm test`           | Run the unit tests once             |
+| `npm run test:watch` | Run tests on every change           |
+| `npm run coverage`   | Tests with a coverage report        |
 
 ## Project structure
 
