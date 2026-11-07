@@ -10,7 +10,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. Everything for a single file works, from opening to exporting as code. Batch processing and sprites come next. See the [roadmap](#roadmap).
+> Work in progress. Single files and batches work, from opening to exporting as code or a zip. SVG sprites come next. See the [roadmap](#roadmap).
 
 ## Features
 
@@ -25,6 +25,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - Presets: four built-in (SVGO default, Keep structure, Maximum compression, Inline icons) and your own, saved in the browser
 - Scripts and event handlers are removed from the output by default
 - Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
+- Batch processing: open or drop several files, they are optimized in parallel Web Workers with the same settings; download each one or all as a zip, open any of them in the editor
 - Demo file to try the app without your own SVG
 - Inline SVG copied from HTML works: missing `xmlns` and `xmlns:xlink` are added automatically
 - Clear, translated errors for empty input, non-SVG files, broken markup and files over 10 MB
@@ -40,7 +41,6 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- Batch processing with zip download
 - SVG sprite generation
 - Offline support (PWA)
 
@@ -90,6 +90,16 @@ npm run dev
 | `npm run test:watch` | Run tests on every change           |
 | `npm run coverage`   | Tests with a coverage report        |
 
+## Tests
+
+Unit tests run with Vitest in jsdom and on every push in GitHub Actions. They cover the parts where a silent mistake would hurt most:
+
+- SVG input checks: what counts as SVG, broken markup, the size limit, and that parsing never runs scripts
+- the plugin catalog against the installed SVGO, so an SVGO upgrade that renames or reorders plugins fails the build
+- the whole pipeline: our settings through `svgo/browser` on real files, for every preset
+- exports: generated Vue components are compiled with Vue's own compiler and rendered; data URIs and CSS are decoded back
+- worker handling (cancel, timeout, recovery) and the batch queue, with fake workers
+
 ## Project structure
 
 ```text
@@ -99,9 +109,9 @@ src/
   i18n/          vue-i18n setup and EN/RU messages
   editor/        CodeMirror setup for the markup view
   export/        Vue component, CSS and data URI generators
-  optimizer/     SVGO worker, worker client, plugin catalog, settings to SVGO config
+  optimizer/     SVGO worker, worker slots and queue, plugin catalog, settings to SVGO config
   plugins/       Vuetify setup
-  stores/        Pinia: current document, optimizer, notifications, settings, UI state
+  stores/        Pinia: current document, batch, optimizer, presets, notifications, settings, UI
   utils/         SVG validation and normalization, byte formatting
   theme/         light and dark palettes
   icons.ts       every icon the app uses, in one place
@@ -114,7 +124,7 @@ src/
 3. ~~Markup view (CodeMirror), size statistics, download and copy~~ ✓
 4. ~~Comparison slider, presets~~ ✓
 5. ~~Export to Vue component, data URI, CSS~~ ✓
-6. Batch processing and sprites
+6. ~~Batch processing~~ ✓, tests and CI ✓, SVG sprites
 7. PWA
 
 ## License
