@@ -25,11 +25,26 @@ export function detectBrowserLocale(): AppLocale {
   return 'en'
 }
 
+/**
+ * Russian plural forms for messages written as "zero | one | few | many":
+ * 0 файлов, 1 файл, 2 файла, 5 файлов, 11 файлов, 21 файл, 22 файла.
+ */
+export function russianPluralRule(choice: number, choicesLength: number): number {
+  if (choice === 0) return 0
+  const lastDigit = choice % 10
+  const lastTwo = choice % 100
+  const teen = lastTwo > 10 && lastTwo < 20
+  if (!teen && lastDigit === 1) return 1
+  if (!teen && lastDigit >= 2 && lastDigit <= 4) return 2
+  return choicesLength < 4 ? 2 : 3
+}
+
 export function createAppI18n(initialLocale: AppLocale) {
   return createI18n<[MessageSchema], AppLocale>({
     legacy: false, // Composition API mode, required by Vuetify's adapter
     locale: initialLocale,
     fallbackLocale: 'en',
     messages: { en, ru },
+    pluralRules: { ru: russianPluralRule },
   })
 }

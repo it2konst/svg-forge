@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { useDropZone } from '@vueuse/core'
-import { useI18n } from 'vue-i18n'
+import { useBatchInput } from '@/composables/useBatchInput'
 import { useSvgErrors } from '@/composables/useSvgErrors'
 import { useSvgLoader } from '@/composables/useSvgLoader'
 import { iconOpen } from '@/icons'
-import { useNotificationsStore } from '@/stores/notifications'
 import { looksLikeSvgFile, SvgInputError } from '@/utils/svg'
 
 /**
  * The whole window is a drop target. While a file is dragged over it,
  * an overlay shows where it will go.
  */
-const { t } = useI18n()
 const { loadFile } = useSvgLoader()
 const { reportError } = useSvgErrors()
-const notifications = useNotificationsStore()
+const { addToBatch, shouldBatch } = useBatchInput()
 
 const { isOverDropZone } = useDropZone(document, {
   // Only react to files: dragging selected text or a link around is not a drop.
@@ -22,17 +20,15 @@ const { isOverDropZone } = useDropZone(document, {
   multiple: true,
   // Dropping a link or text must not navigate away from the app.
   preventDefaultForUnhandled: true,
-  onDrop: async (files) => {
-    const svgFiles = (files ?? []).filter(looksLikeSvgFile)
-    const [first] = svgFiles
-    if (!first) {
+  // One file opens in the editor; several go to the batch list.
+  onDrop: async (dropped) => {
+    const files = dropped ?? []
+    if (!files.some(looksLikeSvgFile)) {
       reportError(new SvgInputError('notSvg'))
       return
     }
-    const loaded = await loadFile(first)
-    if (loaded && (files?.length ?? 0) > 1) {
-      notifications.notify(t('drop.onlyFirst'), 'info')
-    }
+    if (shouldBatch(files.length)) await addToBatch(files)
+    else await loadFile(files[0] as File)
   },
 })
 </script>

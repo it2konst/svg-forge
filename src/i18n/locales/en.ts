@@ -34,8 +34,8 @@ const en = {
     dark: 'Dark',
   },
   empty: {
-    title: 'Drop an SVG here',
-    hint: 'Or open a file, paste markup, or try the demo. Your files never leave the browser.',
+    title: 'Drop SVG files here',
+    hint: 'Several files at once go to a batch list. Or open a file, paste markup, or try the demo. Your files never leave the browser.',
   },
   settings: {
     title: 'Settings',
@@ -59,9 +59,29 @@ const en = {
     cancel: 'Cancel',
     submit: 'Open',
   },
+  batch: {
+    title: 'Batch',
+    files: 'No files | {count} file | {count} files',
+    progress: 'Optimizing: {done} of {total}',
+    queued: 'Waiting',
+    add: 'Add files',
+    clear: 'Clear list',
+    downloadZip: 'Download all (.zip)',
+    open: 'Open {name} in the editor',
+    download: 'Download {name}',
+    remove: 'Remove {name} from the list',
+    backToList: 'Back to the list',
+    failedCount: 'With errors: {count}',
+    skippedNotSvg: 'Skipped files that are not SVG: {count}.',
+    skippedOverLimit: 'The list holds up to 500 files. Left out: {count}.',
+    zipSkipped: 'Files with errors are not in the archive: {count}.',
+    errors: {
+      timeout: 'Took longer than 20 seconds and was stopped.',
+      failed: 'SVGO could not optimize this file.',
+    },
+  },
   drop: {
     release: 'Drop to open',
-    onlyFirst: 'Opened the first SVG. Processing several files at once is coming later.',
   },
   document: {
     close: 'Close file',

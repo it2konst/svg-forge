@@ -6,6 +6,7 @@ import { useFormatBytes } from '@/composables/useFormatBytes'
 import { useDocumentStore } from '@/stores/document'
 import { useOptimizerStore } from '@/stores/optimizer'
 import { useSettingsStore } from '@/stores/settings'
+import { formatChange } from '@/utils/format'
 
 const { t, locale } = useI18n()
 const { formatBytes } = useFormatBytes()
@@ -32,16 +33,7 @@ const optimizedSize = computed(() => {
 const change = computed(() => {
   const before = originalSize.value
   const after = optimizedSize.value
-  if (before === null || after === null || before === 0) return null
-  const ratio = (after - before) / before
-  return {
-    text: new Intl.NumberFormat(locale.value, {
-      style: 'percent',
-      signDisplay: 'exceptZero',
-      maximumFractionDigits: Math.abs(ratio) < 0.1 ? 1 : 0,
-    }).format(ratio),
-    grew: ratio > 0,
-  }
+  return before === null || after === null ? null : formatChange(before, after, locale.value)
 })
 
 const timeTitle = computed(() =>

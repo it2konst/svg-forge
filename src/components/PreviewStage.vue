@@ -7,7 +7,8 @@ import PreviewBackgroundToggle from '@/components/PreviewBackgroundToggle.vue'
 import ResultActions from '@/components/ResultActions.vue'
 import StageStatus from '@/components/StageStatus.vue'
 import SvgPreview from '@/components/SvgPreview.vue'
-import { iconClose, iconCode, iconCompare, iconFile, iconPreview } from '@/icons'
+import { iconBack, iconClose, iconCode, iconCompare, iconFile, iconPreview } from '@/icons'
+import { useBatchStore } from '@/stores/batch'
 import { useDocumentStore } from '@/stores/document'
 import { useOptimizerStore } from '@/stores/optimizer'
 import { useSettingsStore } from '@/stores/settings'
@@ -20,6 +21,7 @@ const settings = useSettingsStore()
 const ui = useUiStore()
 const documentStore = useDocumentStore()
 const optimizer = useOptimizerStore()
+const batch = useBatchStore()
 const { xs } = useDisplay()
 
 const viewOptions = [
@@ -46,6 +48,18 @@ const displayed = computed(() => {
 <template>
   <section class="stage">
     <div class="stage__toolbar">
+      <v-btn
+        v-if="batch.hasItems"
+        :prepend-icon="xs ? undefined : iconBack"
+        :icon="xs"
+        :aria-label="$t('batch.backToList')"
+        size="small"
+        variant="tonal"
+        @click="ui.mode = 'batch'"
+      >
+        <v-icon v-if="xs" :icon="iconBack" />
+        <template v-else>{{ $t('batch.backToList') }}</template>
+      </v-btn>
       <v-btn-toggle
         v-model="ui.view"
         mandatory
