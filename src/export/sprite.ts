@@ -195,3 +195,33 @@ export function spriteUsage(
   if (symbols.length > limit) lines.push(`<!-- …and ${symbols.length - limit} more -->`)
   return lines.join('\n')
 }
+
+/**
+ * One SVG image that draws every symbol of the sprite through <use>, in a grid.
+ * Used as the dialog preview, so the preview exercises the sprite itself:
+ * if an id or a reference were wrong, the icon would show up wrong here too.
+ */
+export function spritePreview(
+  sprite: SpriteResult,
+  { columns = 8, cell = 56, icon = 40 } = {},
+): string {
+  const count = sprite.symbols.length
+  const cols = Math.max(1, Math.min(columns, count))
+  const rows = Math.max(1, Math.ceil(count / cols))
+  const inset = (cell - icon) / 2
+
+  // The sprite's own <svg> root becomes a nested element that holds the symbols.
+  const definitions = sprite.code.replace(/^<svg [^>]*>/, '<svg width="0" height="0">').trim()
+  const uses = sprite.symbols.map((symbol, index) => {
+    const x = (index % cols) * cell + inset
+    const y = Math.floor(index / cols) * cell + inset
+    return `<use href="#${symbol.id}" x="${x}" y="${y}" width="${icon}" height="${icon}"/>`
+  })
+
+  return [
+    `<svg xmlns="${SVG_NS}" xmlns:xlink="${XLINK_NS}" viewBox="0 0 ${cols * cell} ${rows * cell}" width="${cols * cell}" height="${rows * cell}">`,
+    definitions,
+    ...uses,
+    '</svg>',
+  ].join('\n')
+}

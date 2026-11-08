@@ -80,6 +80,26 @@ const en = {
       failed: 'SVGO could not optimize this file.',
     },
   },
+  sprite: {
+    open: 'Sprite',
+    title: 'SVG sprite',
+    intro: {
+      file: 'All optimized files in one sprite.svg, each icon a <symbol>. Draw one with <use href="sprite.svg#id">. Browsers load sprite files only from the same site.',
+      inline:
+        'All optimized files in one hidden <svg> to paste at the top of <body>. Draw an icon with <use href="#id">; works without an extra request.',
+    },
+    mode: 'Sprite type',
+    modes: {
+      file: 'Separate file',
+      inline: 'Inline in HTML',
+    },
+    icons: 'No icons | 1 icon | {count} icons',
+    previewAlt: 'All {count} icons, drawn from the sprite',
+    ids: 'Symbol ids',
+    code: 'Sprite',
+    usage: 'How to use',
+    skipped: 'Left out because they could not be read: {names}.',
+  },
   drop: {
     release: 'Drop to open',
   },

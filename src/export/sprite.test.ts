@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildSprite, prefixIds, spriteUsage, symbolIds } from './sprite'
+import { buildSprite, prefixIds, spritePreview, spriteUsage, symbolIds } from './sprite'
 import { parseSvgRoot } from './geometry'
 
 const NS = 'xmlns="http://www.w3.org/2000/svg"'
@@ -175,5 +175,26 @@ describe('spriteUsage', () => {
   it('shows a few examples and says how many more there are', () => {
     expect(spriteUsage(symbols, 'file').split('\n')).toHaveLength(4)
     expect(spriteUsage(symbols, 'file')).toContain('…and 1 more')
+  })
+})
+
+describe('spritePreview', () => {
+  it('draws every symbol with <use> in a grid and stays valid XML', () => {
+    const sprite = buildSprite(
+      Array.from({ length: 10 }, (_, i) => ({
+        name: `i${i}.svg`,
+        markup: `<svg ${NS} viewBox="0 0 4 4"><defs><linearGradient id="g"/></defs><rect width="4" height="4" fill="url(#g)"/></svg>`,
+      })),
+      'file',
+    )
+    const preview = spritePreview(sprite, { columns: 4, cell: 10, icon: 8 })
+    const doc = new DOMParser().parseFromString(preview, 'image/svg+xml')
+    expect(doc.getElementsByTagName('parsererror')).toHaveLength(0)
+    expect(doc.documentElement.getAttribute('viewBox')).toBe('0 0 40 30')
+    expect(doc.getElementsByTagName('symbol')).toHaveLength(10)
+    const uses = Array.from(doc.getElementsByTagName('use'))
+    expect(uses).toHaveLength(10)
+    expect(uses[5]?.getAttribute('href')).toBe('#i5')
+    expect([uses[5]?.getAttribute('x'), uses[5]?.getAttribute('y')]).toEqual(['11', '11'])
   })
 })

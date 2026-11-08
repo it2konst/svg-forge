@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
 import BatchRow from '@/components/batch/BatchRow.vue'
+import SpriteDialog from '@/components/batch/SpriteDialog.vue'
 import { useFileOpener } from '@/composables/useFileOpener'
 import { useFormatBytes } from '@/composables/useFormatBytes'
 import { downloadName } from '@/composables/useResultExport'
 import { zipTextFiles } from '@/export/zip'
-import { iconAdd, iconClearAll, iconZip } from '@/icons'
+import { iconAdd, iconClearAll, iconSprite, iconZip } from '@/icons'
 import { type BatchItem, useBatchStore } from '@/stores/batch'
 import { useDocumentStore } from '@/stores/document'
 import { useNotificationsStore } from '@/stores/notifications'
@@ -26,6 +27,8 @@ const ui = useUiStore()
 const settings = useSettingsStore()
 const notifications = useNotificationsStore()
 const { openFile } = useFileOpener()
+
+const spriteOpen = ref(false)
 
 const summary = computed(() => {
   const totals = batch.totals
@@ -107,6 +110,18 @@ function clear() {
           <template v-else>{{ t('batch.clear') }}</template>
         </v-btn>
         <v-btn
+          :prepend-icon="xs ? undefined : iconSprite"
+          :icon="xs"
+          :disabled="!batch.done.length || batch.running"
+          :aria-label="t('sprite.open')"
+          variant="tonal"
+          color="primary"
+          @click="spriteOpen = true"
+        >
+          <v-icon v-if="xs" :icon="iconSprite" />
+          <template v-else>{{ t('sprite.open') }}</template>
+        </v-btn>
+        <v-btn
           :prepend-icon="iconZip"
           :disabled="!batch.done.length"
           :loading="batch.running"
@@ -129,6 +144,8 @@ function clear() {
         @remove="batch.remove(item.id)"
       />
     </ul>
+
+    <SpriteDialog v-model="spriteOpen" />
   </section>
 </template>
 
