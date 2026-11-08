@@ -10,7 +10,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. Single files and batches work, from opening to exporting as code or a zip. SVG sprites come next. See the [roadmap](#roadmap).
+> Work in progress. Single files and batches work, from opening to exporting as code, a zip or an SVG sprite. Offline support (PWA) comes next. See the [roadmap](#roadmap).
 
 ## Features
 
@@ -26,6 +26,7 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - Scripts and event handlers are removed from the output by default
 - Open an SVG from disk (also Ctrl+O), paste markup in a dialog or with Ctrl+V anywhere, or drag and drop a file onto the window
 - Batch processing: open or drop several files, they are optimized in parallel Web Workers with the same settings; download each one or all as a zip, open any of them in the editor
+- SVG sprite from a batch: every file becomes a `<symbol>`, inner ids are prefixed so icons never clash; as a separate `sprite.svg` or inline for HTML, with a preview drawn from the sprite itself
 - Demo file to try the app without your own SVG
 - Inline SVG copied from HTML works: missing `xmlns` and `xmlns:xlink` are added automatically
 - Clear, translated errors for empty input, non-SVG files, broken markup and files over 10 MB
@@ -41,7 +42,6 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 **Planned**
 
-- SVG sprite generation
 - Offline support (PWA)
 
 ## Security
@@ -99,6 +99,7 @@ Unit tests run with Vitest in jsdom and on every push in GitHub Actions. They co
 - the whole pipeline: our settings through `svgo/browser` on real files, for every preset
 - exports: generated Vue components are compiled with Vue's own compiler and rendered; data URIs and CSS are decoded back
 - worker handling (cancel, timeout, recovery) and the batch queue, with fake workers
+- sprites: ids and every kind of reference to them are renamed, so icons sharing a gradient id keep their own colors
 
 ## Project structure
 
@@ -108,7 +109,7 @@ src/
   composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
   editor/        CodeMirror setup for the markup view
-  export/        Vue component, CSS and data URI generators
+  export/        Vue component, CSS, data URI, sprite and zip generators
   optimizer/     SVGO worker, worker slots and queue, plugin catalog, settings to SVGO config
   plugins/       Vuetify setup
   stores/        Pinia: current document, batch, optimizer, presets, notifications, settings, UI
@@ -124,7 +125,7 @@ src/
 3. ~~Markup view (CodeMirror), size statistics, download and copy~~ ✓
 4. ~~Comparison slider, presets~~ ✓
 5. ~~Export to Vue component, data URI, CSS~~ ✓
-6. ~~Batch processing~~ ✓, tests and CI ✓, SVG sprites
+6. ~~Batch processing, tests and CI, SVG sprites~~ ✓
 7. PWA
 
 ## License
