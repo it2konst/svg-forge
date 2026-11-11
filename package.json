@@ -58,5 +58,15 @@
   "engines": {
     "node": ">=20.19"
   },
-  "description": "SVG optimizer in the browser, built with Vue 3, Vuetify and SVGO"
+  "description": "SVG optimizer in the browser, built with Vue 3, Vuetify and SVGO",
+  "author": "it2konst (https://github.com/it2konst)",
+  "license": "MIT",
+  "homepage": "https://svg-forge-two.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it2konst/svg-forge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/it2konst/svg-forge/issues"
+  }
 }

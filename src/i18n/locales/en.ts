@@ -106,6 +106,10 @@ const en = {
   document: {
     close: 'Close file',
   },
+  about: {
+    madeBy: 'Made by {author}',
+    sourceCode: 'Source code on GitHub',
+  },
   notifications: {
     close: 'Close',
   },

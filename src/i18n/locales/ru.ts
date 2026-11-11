@@ -106,6 +106,10 @@ const ru: MessageSchema = {
   document: {
     close: 'Закрыть файл',
   },
+  about: {
+    madeBy: 'Автор: {author}',
+    sourceCode: 'Исходный код на GitHub',
+  },
   notifications: {
     close: 'Закрыть',
   },

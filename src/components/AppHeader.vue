@@ -4,7 +4,8 @@ import AppLogo from '@/components/AppLogo.vue'
 import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher.vue'
 import { useInputActions } from '@/composables/useInputActions'
-import { iconSettings } from '@/icons'
+import { REPOSITORY_URL } from '@/about'
+import { iconGithub, iconSettings } from '@/icons'
 
 defineEmits<{ toggleSettings: [] }>()
 
@@ -41,6 +42,18 @@ const actions = useInputActions()
     </div>
 
     <template #append>
+      <!-- Hidden on phones, where the header is full; the settings panel links there too. -->
+      <v-btn
+        v-if="!xs"
+        :href="REPOSITORY_URL"
+        target="_blank"
+        rel="noopener noreferrer"
+        :aria-label="$t('about.sourceCode')"
+        icon
+      >
+        <v-icon :icon="iconGithub" />
+        <v-tooltip activator="parent">{{ $t('about.sourceCode') }}</v-tooltip>
+      </v-btn>
       <LanguageSwitcher />
       <ThemeSwitcher />
       <v-btn

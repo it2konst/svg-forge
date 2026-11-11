@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import PrecisionSlider from '@/components/PrecisionSlider.vue'
 import PresetPicker from '@/components/PresetPicker.vue'
+import { AUTHOR_NAME, AUTHOR_URL, REPOSITORY_URL } from '@/about'
 import { iconReset } from '@/icons'
 import { PRECISION_MAX, PRECISION_MIN, isPluginEnabled } from '@/optimizer/config'
 import { PLUGIN_GROUPS, PLUGINS } from '@/optimizer/plugins'
@@ -138,14 +139,29 @@ function reset() {
       </div>
     </section>
 
-    <p class="settings-panel__footer">
-      <i18n-t keypath="settings.poweredBy" tag="span">
-        <template #svgo>
-          <a href="https://svgo.dev" target="_blank" rel="noopener noreferrer">SVGO</a>
-        </template>
-        <template #version>{{ svgoVersion }}</template>
-      </i18n-t>
-    </p>
+    <v-divider class="mt-4" />
+    <footer class="settings-panel__footer">
+      <p>
+        <i18n-t keypath="about.madeBy" tag="span">
+          <template #author>
+            <a :href="AUTHOR_URL" target="_blank" rel="noopener noreferrer">{{ AUTHOR_NAME }}</a>
+          </template>
+        </i18n-t>
+      </p>
+      <p>
+        <a :href="REPOSITORY_URL" target="_blank" rel="noopener noreferrer">
+          {{ $t('about.sourceCode') }}
+        </a>
+      </p>
+      <p>
+        <i18n-t keypath="settings.poweredBy" tag="span">
+          <template #svgo>
+            <a href="https://svgo.dev" target="_blank" rel="noopener noreferrer">SVGO</a>
+          </template>
+          <template #version>{{ svgoVersion }}</template>
+        </i18n-t>
+      </p>
+    </footer>
   </div>
 </template>
 
@@ -204,9 +220,15 @@ function reset() {
   opacity: 1;
 }
 .settings-panel__footer {
-  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
   font-size: 0.8125rem;
   color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+}
+.settings-panel__footer p {
+  margin: 0;
 }
 .settings-panel__footer a {
   color: rgb(var(--v-theme-primary));
