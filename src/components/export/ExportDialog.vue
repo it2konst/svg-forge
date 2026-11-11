@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
 import ExportCss from '@/components/export/ExportCss.vue'
@@ -20,6 +20,11 @@ const { xs } = useDisplay()
 type ExportTab = 'vue' | 'css' | 'uri'
 const tab = ref<ExportTab>('vue')
 const tabs: ExportTab[] = ['vue', 'css', 'uri']
+
+// A tab is built the first time it is opened and kept afterwards, so a big file
+// doesn't compute data URIs nobody asked for, and edited fields survive switching.
+const visited = reactive(new Set<ExportTab>(['vue']))
+watch(tab, (name) => visited.add(name))
 </script>
 
 <template>
@@ -47,18 +52,34 @@ const tabs: ExportTab[] = ['vue', 'css', 'uri']
       </v-tabs>
       <v-divider />
 
+      <!-- Plain v-show panels instead of v-window: no slide animation is needed here,
+           and v-window adds a non-passive wheel listener and clips its content
+           (it cut off the edge of the switch thumbs). -->
       <v-card-text v-if="optimizer.result && documentStore.current" class="pt-4">
-        <v-window v-model="tab">
-          <v-window-item value="vue">
-            <ExportVue :markup="optimizer.result.markup" :file-name="documentStore.current.name" />
-          </v-window-item>
-          <v-window-item value="css">
-            <ExportCss :markup="optimizer.result.markup" :file-name="documentStore.current.name" />
-          </v-window-item>
-          <v-window-item value="uri">
-            <ExportDataUri :markup="optimizer.result.markup" />
-          </v-window-item>
-        </v-window>
+        <div
+          v-if="visited.has('vue')"
+          v-show="tab === 'vue'"
+          role="tabpanel"
+          :aria-label="t('exportCode.tabs.vue')"
+        >
+          <ExportVue :markup="optimizer.result.markup" :file-name="documentStore.current.name" />
+        </div>
+        <div
+          v-if="visited.has('css')"
+          v-show="tab === 'css'"
+          role="tabpanel"
+          :aria-label="t('exportCode.tabs.css')"
+        >
+          <ExportCss :markup="optimizer.result.markup" :file-name="documentStore.current.name" />
+        </div>
+        <div
+          v-if="visited.has('uri')"
+          v-show="tab === 'uri'"
+          role="tabpanel"
+          :aria-label="t('exportCode.tabs.uri')"
+        >
+          <ExportDataUri :markup="optimizer.result.markup" />
+        </div>
       </v-card-text>
     </v-card>
   </v-dialog>
