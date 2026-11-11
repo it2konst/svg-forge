@@ -4,6 +4,8 @@
 
 [![CI](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml)
 
+**Живое демо: [svg-forge-two.vercel.app](https://svg-forge-two.vercel.app)**
+
 Оптимизатор SVG, который работает полностью в браузере. Перетащите SVG, настройте параметры [SVGO](https://github.com/svg/svgo), сравните результат и скачайте его. Файлы обрабатываются на вашем устройстве и никуда не загружаются.
 
 Проект вдохновлён [SVGOMG](https://github.com/jakearchibald/svgomg) Джейка Арчибальда, написан с нуля на Vue 3 и дополнен функциями для фронтенд-разработки.
@@ -127,6 +129,10 @@ src/
 5. ~~Экспорт в Vue-компонент, data URI, CSS~~ ✓
 6. ~~Пакетная обработка, тесты и CI, SVG-спрайты~~ ✓
 7. PWA
+
+## Автор
+
+Сделал [it2konst](https://github.com/it2konst). Ошибки и предложения можно оставить в [GitHub Issues](https://github.com/it2konst/svg-forge/issues).
 
 ## Лицензия
 

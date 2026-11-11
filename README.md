@@ -4,6 +4,8 @@
 
 [![CI](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml/badge.svg)](https://github.com/it2konst/svg-forge/actions/workflows/ci.yml)
 
+**Live demo: [svg-forge-two.vercel.app](https://svg-forge-two.vercel.app)**
+
 An SVG optimizer that runs entirely in the browser. Drop in an SVG, tune the [SVGO](https://github.com/svg/svgo) options, compare the result and download it. Files are processed on your device and never uploaded anywhere.
 
 Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), written from scratch with Vue 3 and extended with features for front-end work.
@@ -127,6 +129,10 @@ src/
 5. ~~Export to Vue component, data URI, CSS~~ ✓
 6. ~~Batch processing, tests and CI, SVG sprites~~ ✓
 7. PWA
+
+## Author
+
+Made by [it2konst](https://github.com/it2konst). Issues and suggestions are welcome in [GitHub Issues](https://github.com/it2konst/svg-forge/issues).
 
 ## License
 
