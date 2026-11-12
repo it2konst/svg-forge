@@ -10,6 +10,7 @@ import UpdatePrompt from '@/components/UpdatePrompt.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import BatchView from '@/components/batch/BatchView.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
+import { useFileLaunch } from '@/composables/useFileLaunch'
 import { useLocaleSync } from '@/composables/useLocaleSync'
 import { useOptimizerErrors } from '@/composables/useOptimizerErrors'
 import { usePasteListener } from '@/composables/usePasteListener'
@@ -21,6 +22,7 @@ useThemeSync()
 useLocaleSync()
 usePasteListener()
 useOptimizerErrors()
+useFileLaunch()
 
 const ui = useUiStore()
 const batch = useBatchStore()

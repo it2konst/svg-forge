@@ -42,6 +42,10 @@ export default defineConfig({
         theme_color: '#F5F4F0',
         background_color: '#F5F4F0',
         categories: ['developer', 'productivity', 'graphics'],
+        // Once installed, svg-forge shows up under "Open with" for .svg files.
+        file_handlers: [{ action: '/', accept: { 'image/svg+xml': ['.svg'] } }],
+        // Opening more files reuses the window that is already open.
+        launch_handler: { client_mode: 'focus-existing' },
         icons: [
           { src: 'icons/pwa-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
           { src: 'icons/pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
