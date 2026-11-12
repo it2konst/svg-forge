@@ -106,6 +106,14 @@ const ru: MessageSchema = {
   document: {
     close: 'Закрыть файл',
   },
+  pwa: {
+    offlineReady: 'svg-forge сохранён на устройстве и теперь работает офлайн.',
+    updateAvailable: 'Готова новая версия svg-forge.',
+    update: 'Обновить',
+    later: 'Позже',
+    install: 'Установить приложение',
+    installed: 'svg-forge установлен. Открывайте его как обычное приложение.',
+  },
   about: {
     madeBy: 'Автор: {author}',
     sourceCode: 'Исходный код на GitHub',

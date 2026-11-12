@@ -6,6 +6,7 @@ import AppNotifications from '@/components/AppNotifications.vue'
 import DropOverlay from '@/components/DropOverlay.vue'
 import ExportDialog from '@/components/export/ExportDialog.vue'
 import PasteDialog from '@/components/PasteDialog.vue'
+import UpdatePrompt from '@/components/UpdatePrompt.vue'
 import PreviewStage from '@/components/PreviewStage.vue'
 import BatchView from '@/components/batch/BatchView.vue'
 import SettingsPanel from '@/components/SettingsPanel.vue'
@@ -55,6 +56,7 @@ const settingsOpen = computed({
     <ExportDialog />
     <DropOverlay />
     <AppNotifications />
+    <UpdatePrompt />
   </v-app>
 </template>
 

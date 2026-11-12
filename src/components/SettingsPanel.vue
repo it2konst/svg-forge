@@ -3,8 +3,9 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import PrecisionSlider from '@/components/PrecisionSlider.vue'
 import PresetPicker from '@/components/PresetPicker.vue'
+import { usePwa } from '@/composables/usePwa'
 import { AUTHOR_NAME, AUTHOR_URL, REPOSITORY_URL } from '@/about'
-import { iconReset } from '@/icons'
+import { iconInstall, iconReset } from '@/icons'
 import { PRECISION_MAX, PRECISION_MIN, isPluginEnabled } from '@/optimizer/config'
 import { PLUGIN_GROUPS, PLUGINS } from '@/optimizer/plugins'
 import { useNotificationsStore } from '@/stores/notifications'
@@ -18,6 +19,8 @@ const optimizer = useOptimizerStore()
 const appSettings = useSettingsStore()
 const ui = useUiStore()
 const notifications = useNotificationsStore()
+
+const { canInstall, install } = usePwa()
 
 const svgoVersion = __SVGO_VERSION__
 
@@ -140,6 +143,17 @@ function reset() {
     </section>
 
     <v-divider class="mt-4" />
+    <v-btn
+      v-if="canInstall"
+      :prepend-icon="iconInstall"
+      variant="tonal"
+      color="primary"
+      block
+      class="mt-4"
+      @click="install"
+    >
+      {{ $t('pwa.install') }}
+    </v-btn>
     <footer class="settings-panel__footer">
       <p>
         <i18n-t keypath="about.madeBy" tag="span">

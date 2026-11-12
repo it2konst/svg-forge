@@ -106,6 +106,14 @@ const en = {
   document: {
     close: 'Close file',
   },
+  pwa: {
+    offlineReady: 'svg-forge is saved on this device and now works offline.',
+    updateAvailable: 'A new version of svg-forge is ready.',
+    update: 'Update',
+    later: 'Later',
+    install: 'Install app',
+    installed: 'svg-forge is installed. Open it like any other app.',
+  },
   about: {
     madeBy: 'Made by {author}',
     sourceCode: 'Source code on GitHub',

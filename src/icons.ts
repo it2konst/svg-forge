@@ -22,6 +22,7 @@ export {
   mdiPencilOutline as iconEdit,
   mdiPlus as iconAdd,
   mdiFolderZipOutline as iconZip,
+  mdiMonitorArrowDown as iconInstall,
   mdiViewGridOutline as iconSprite,
   mdiDeleteSweepOutline as iconClearAll,
   mdiAlertCircleOutline as iconError,
