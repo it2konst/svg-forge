@@ -12,11 +12,9 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 
 ![svg-forge in light and dark themes](docs/screenshots/overview.png)
 
-> Work in progress. Single files and batches work, from opening to exporting as code, a zip or an SVG sprite. Offline support (PWA) comes next. See the [roadmap](#roadmap).
+> Every step of the [roadmap](#roadmap) is done: single files and batches, export as code, a zip or an SVG sprite, and an installable app that works offline. Ideas and bug reports are welcome.
 
 ## Features
-
-**Ready**
 
 - SVGO 4 runs in a Web Worker, so the interface never freezes; the result updates live as options change
 - Global options (multipass, number and transform precision, prettify) and switches for 47 SVGO plugins in five groups, saved between visits
@@ -41,10 +39,10 @@ Inspired by Jake Archibald's [SVGOMG](https://github.com/jakearchibald/svgomg), 
 - Preview background independent of the theme: checkerboard, light or dark
 - Responsive layout down to phone width
 - Strict Content-Security-Policy on deploy
-
-**Planned**
-
-- Offline support (PWA)
+- Works offline after the first visit: the whole app, including the SVGO worker, the code view and the fonts, is cached by a service worker
+- Installable as a standalone app (Chrome, Edge, Android, Safari on iOS and macOS); once installed it shows up under "Open with" for .svg files in Chrome and Edge on desktop
+- A new version is never forced on you: the app offers "Update" and reloads only when you agree
+- Link preview: a shared link unfolds into a card in messengers and on social sites
 
 ## Security
 
@@ -68,6 +66,7 @@ SVG files can contain scripts and event handlers. svg-forge never injects user S
 | Quality   | ESLint (flat config), Prettier, vue-tsc               |
 | Tests     | Vitest with jsdom, GitHub Actions CI                  |
 | Optimizer | SVGO 4 in a Web Worker, Comlink                       |
+| Offline   | vite-plugin-pwa (Workbox), Web App Manifest           |
 | Code view | CodeMirror 6                                          |
 | Hosting   | Vercel                                                |
 
@@ -108,7 +107,7 @@ Unit tests run with Vitest in jsdom and on every push in GitHub Actions. They co
 ```text
 src/
   components/    UI components (header, preview stage, settings panel…)
-  composables/   loading SVG (file, paste, drop, demo), errors, theme and language sync
+  composables/   loading SVG (file, paste, drop, demo, Open with), errors, PWA, theme and language sync
   i18n/          vue-i18n setup and EN/RU messages
   editor/        CodeMirror setup for the markup view
   export/        Vue component, CSS, data URI, sprite and zip generators
@@ -128,7 +127,7 @@ src/
 4. ~~Comparison slider, presets~~ ✓
 5. ~~Export to Vue component, data URI, CSS~~ ✓
 6. ~~Batch processing, tests and CI, SVG sprites~~ ✓
-7. PWA
+7. ~~PWA: offline, install, open .svg files with the app, link preview~~ ✓
 
 ## Author
 
